@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "koa-passport":"4.0.1",
     "config":"1.27.0",
     "jshint": "^2.9.4",
     "koa":"2.3.0",
