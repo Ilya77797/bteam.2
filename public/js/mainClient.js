@@ -1,4 +1,8 @@
 window.addEventListener('DOMContentLoaded', function() {
+    window.onerror = function (msg, url, line) {
+ alert(msg + "\n" + url + "\n" + "\n" + line);
+ return true;
+};
     var currentCat=null;
     addEvents();
     SearchData(false,true);
