@@ -50,4 +50,4 @@ app.use(async (ctx, next) => {
 
 app.use(router.routes());
 app.listen(config1.port);
-module.exports = app;
+
