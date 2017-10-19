@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "config":"1.27.0",
     "jshint": "^2.9.4",
     "koa":"2.3.0",
     "mongoose":"4.11.1",
