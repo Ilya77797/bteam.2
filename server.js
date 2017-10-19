@@ -18,7 +18,7 @@ app.keys = [config.secret];
 const path = require('path');
 const fs = require('fs');
 const middlewares = fs.readdirSync(path.join(__dirname, 'middlewares')).sort();
-
+const config1 = require('./config/default');
 middlewares.forEach(function(middleware) {
   app.use(require('./middlewares/' + middleware));
 });
@@ -49,5 +49,5 @@ app.use(async (ctx, next) => {
 
 
 app.use(router.routes());
-
+app.listen(config1.port);
 module.exports = app;
