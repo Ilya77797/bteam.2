@@ -19,37 +19,47 @@ window.addEventListener('DOMContentLoaded', function() {
 
     async function renderCat(mass) {
         var flag=false;
-        await clear('categor');
-        var div = document.getElementById('categor');
-        if(mass[0]=='Нет таких категорий'){
-            var div_2=document.createElement('div');
-            div_2.textContent='Нет таких категорий';
-            div.appendChild(div_2);
-        }
-        else{
-            mass.forEach(function (item) {
-                var div_2=document.createElement('div');
-                div_2.classList.add('categor-item');
-                var a = document.createElement('a');
-                a.setAttribute('data-info', item);
-                a.setAttribute('href','#');
-                a.textContent = item;
-                if(currentCat!=null&&item==currentCat.getAttribute('data-info')){
-                    div_2.classList.add('categor-item-active');
-                    flag=true;
+        var promise=new Promise((resolve, reject)=>{
+            resolve();
+        })
+            .then(()=>{
+                clear('categor');
+            })
+            .then(()=>{
+                var div = document.getElementById('categor');
+                if(mass[0]=='Нет таких категорий'){
+                    var div_2=document.createElement('div');
+                    div_2.textContent='Нет таких категорий';
+                    div.appendChild(div_2);
+                }
+                else{
+                    mass.forEach(function (item) {
+                        var div_2=document.createElement('div');
+                        div_2.classList.add('categor-item');
+                        var a = document.createElement('a');
+                        a.setAttribute('data-info', item);
+                        a.setAttribute('href','#');
+                        a.textContent = item;
+                        if(currentCat!=null&&item==currentCat.getAttribute('data-info')){
+                            div_2.classList.add('categor-item-active');
+                            flag=true;
+                        }
+
+                        div_2.appendChild(a);
+                        div.appendChild(div_2);
+                    });
+
+                    if(flag==false&&currentCat!=null){
+                        var div_2=document.createElement('div');
+                        div_2.classList.add('categor-item','categor-item-active');
+                        div_2.appendChild(currentCat);
+                        div.insertBefore(div_2, div.firstElementChild);
+                    }
                 }
 
-                div_2.appendChild(a);
-                div.appendChild(div_2);
             });
 
-            if(flag==false&&currentCat!=null){
-                var div_2=document.createElement('div');
-                div_2.classList.add('categor-item','categor-item-active');
-                div_2.appendChild(currentCat);
-                div.insertBefore(div_2, div.firstElementChild);
-            }
-        }
+
 
 
     }
@@ -62,48 +72,56 @@ window.addEventListener('DOMContentLoaded', function() {
         var products=mass.Products;
         var login=mass.login;
         var pages=mass.PageCount;
-        if(products==undefined)
-        {
-            await clear('PR');
-            var li=document.createElement('li');
-            li.textContent='По вашему запросу ничего не найдено';
-            li.style.textAlign = "center";
-            ul.appendChild(li);
-            try {
-                document.getElementById('light-pagination').firstElementChild.remove();
-            }
-            catch (e){
+        var promise=new Promise((resolve, reject)=>{
+            resolve();
+        })
+            .then(()=>{
+                clear('PR');
+            })
+            .then(()=>{
+                if(products==undefined)
+                {
+                    var li=document.createElement('li');
+                    li.textContent='По вашему запросу ничего не найдено';
+                    li.style.textAlign = "center";
+                    ul.appendChild(li);
+                    try {
+                        document.getElementById('light-pagination').firstElementChild.remove();
+                    }
+                    catch (e){
 
-            }
-            return ;
+                    }
+                    return ;
 
-        }
-        await clear('PR');
+                }
 
-        products.forEach((item)=>{
-            var li=createElements(item, login);
-            ul.appendChild(li);
-        });
 
-        if(!f){//Запрос не по номеру страницы
-            if(pages>1){
-                $('#light-pagination').pagination({
-                    items: pages,
-                    cssStyle: 'light-theme',
-                    prevText: 'Пред',
-                    nextText: 'След',
+                products.forEach((item)=>{
+                    var li=createElements(item, login);
+                    ul.appendChild(li);
                 });
-            }
-            else{
-                try{
-                    document.getElementById('light-pagination').firstElementChild.remove();
-                }
-                catch(e){
-                    console.log('Ошибка: ',e);
+
+                if(!f){//Запрос не по номеру страницы
+                    if(pages>1){
+                        $('#light-pagination').pagination({
+                            items: pages,
+                            cssStyle: 'light-theme',
+                            prevText: 'Пред',
+                            nextText: 'След',
+                        });
+                    }
+                    else{
+                        try{
+                            document.getElementById('light-pagination').firstElementChild.remove();
+                        }
+                        catch(e){
+                            console.log('Ошибка: ',e);
+                        }
+
+                    }
                 }
 
-            }
-        }
+            });
 
 
 
