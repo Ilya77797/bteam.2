@@ -1,8 +1,5 @@
 window.addEventListener('DOMContentLoaded', function() {
-    window.onerror = function (msg, url, line) {
- alert(msg + "\n" + url + "\n" + "\n" + line);
- return true;
-};
+
     var currentCat=null;
     addEvents();
     SearchData(false,true);
@@ -17,7 +14,7 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    async function renderCat(mass) {
+     function renderCat(mass) {
         var flag=false;
         var promise=new Promise((resolve, reject)=>{
             resolve();
@@ -64,7 +61,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     }
 
-    async function renderData(mass,f) {
+     function renderData(mass,f) {
 
         var ul=document.getElementById('PR');
         ul.classList.remove('awaitSearch');
@@ -131,26 +128,22 @@ window.addEventListener('DOMContentLoaded', function() {
     function SearchCat(form) {
         form.onsubmit = function(event) {
             event.preventDefault();
-            var a=new FormData(this);
-            fetch('/searchCat', {
-                method: "POST",
-                credentials: "include", // "omit" by default, for cookies to work
-                body: new FormData(this)
-            })
-                .then(response => response.json())
-                .then(response => {
-                    if (response.error) {
-                        alert(response.error.message);
-                    } else if (response!='') {
-                        renderCat(response)
-                    }
-                })
-                .catch(function(err) {
-                    alert("Error: " + err.message);
-                });
+            var a = new FormData(this);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/searchCat', true);
+            xhr.send(new FormData(this));
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState != 4) return;
+
+                if (xhr.status == 200) {
+                    renderCat(JSON.parse(xhr.response));
+                }
+
+
+            }
+
         }
-
-
     }
 
     function SearchData(f,isMain) {
@@ -183,25 +176,22 @@ window.addEventListener('DOMContentLoaded', function() {
                 isPageS:f
             };
 
-            fetch('/searchData', {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json"
-                },
-                credentials: "include", // "omit" by default, for cookies to work
-                body: JSON.stringify(req)
-            })
-                .then(response => response.json())
-                .then(response => {
-                    if (response.error) {
-                        alert(response.error.message);
-                    } else if (response!='') {
-                        renderData(response,f)
-                    }
-                })
-                .catch(function(err) {
-                    alert("Error: " + err.message);
-                });
+
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/searchData', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(req));
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState != 4) return;
+
+            if (xhr.status == 200) {
+                renderData(JSON.parse(xhr.response),f);
+            }
+
+
+        }
+
 
 
 
