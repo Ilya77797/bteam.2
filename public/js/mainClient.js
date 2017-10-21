@@ -248,6 +248,63 @@ window.addEventListener('DOMContentLoaded', function() {
 
         var topMenu=document.getElementsByClassName('topMenu')[0];
         topMenu.addEventListener('click', topMenuFetch);
+
+        document.body.addEventListener('scroll',()=> {
+            var isMobile = getComputedStyle(document.getElementsByClassName('mobile')[0]);
+            var cat=getComputedStyle(document.getElementsByClassName('categor-wrapper-fix')[0]);
+            if (isMobile.display == 'none') return;
+
+            if(cat.display=='block'){//скроллинг в категориях
+
+                var height = '';
+                try{
+                    height=parseFloat(getComputedStyle(document.getElementById('header')).height);
+                }
+                catch (e){
+                    return;
+                };
+
+                var top = $('body').scrollTop();
+                if (top > height) {
+                    document.getElementsByClassName('catS')[0].classList.add('catSscroll');
+                }
+                else {
+                    try {
+                        document.getElementsByClassName('catS')[0].classList.remove('catSscroll');
+                    }
+                    catch (e) {
+
+                    }
+                }
+            }
+            else{//основной скроллинг
+
+                var height = '';
+                try{
+                    height=parseFloat(getComputedStyle(document.getElementById('header')).height);
+                }
+                catch (e){
+                    return;
+                };
+
+                var top = $('body').scrollTop();
+                if (top > height) {
+                    document.getElementsByClassName('topMenu')[0].classList.add('topMenuScroll');
+                }
+                else{
+                    try {
+                        document.getElementsByClassName('topMenu')[0].classList.remove('topMenuScroll');
+                    }
+                    catch (e){
+
+                    }
+                }
+
+
+            }
+
+        });
+
     }
 
     /*Pagination*/
