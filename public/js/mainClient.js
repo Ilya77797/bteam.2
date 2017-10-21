@@ -264,7 +264,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     return;
                 };
 
-                var top = $('body').scrollTop();
+                var top = document.body.scrollTop;
                 if (top > height) {
                     document.getElementsByClassName('catS')[0].classList.add('catSscroll');
                 }
@@ -287,7 +287,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     return;
                 };
 
-                var top = $('body').scrollTop();
+                var top = document.body.scrollTop;
                 if (top > height) {
                     document.getElementsByClassName('topMenu')[0].classList.add('topMenuScroll');
                 }
