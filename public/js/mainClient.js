@@ -259,7 +259,8 @@ window.addEventListener('DOMContentLoaded', function() {
        currentCat=catNode.cloneNode(true);
        changeActiveCat(e.target.parentNode);
        SearchData(false,true);
-       if(document.getElementsByClassName('mobile')[0].style.display!='none'){
+       var isMobile=getComputedStyle(document.getElementsByClassName('mobile')[0]);
+       if(isMobile.display!='none'){
            var cat=document.getElementsByClassName('categor-wrapper-fix')[0];
            var ul=document.getElementById('PR');
            var pg=document.getElementById('light-pagination');
