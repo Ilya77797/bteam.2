@@ -206,11 +206,36 @@ window.addEventListener('DOMContentLoaded', function() {
             catForm.dispatchEvent(event);
         });
 
+
+
         //for data
         var dataForm=document.getElementById('dataSearch');
         dataForm.searchD.addEventListener('keyup',function () {
             SearchData(false,true);
         });
+
+        dataForm.addEventListener('submit',(e)=>{
+            e.preventDefault();
+
+        });
+
+        dataForm.searchD.addEventListener('focus',()=>{
+            var s=document.getElementById('dataSearch').searchD.placeholder='';
+
+        });
+
+        dataForm.searchD.addEventListener('blur',()=>{
+            document.getElementById('dataSearch').searchD.placeholder='Поиск товаров';
+        });
+
+        catForm.search.addEventListener('focus',()=>{
+            document.getElementById('catSearch').search.placeholder='';
+        });
+
+        catForm.search.addEventListener('blur',()=>{
+            document.getElementById('catSearch').search.placeholder='Поиск в категориях';
+        });
+
 
         var pagination=document.getElementById('light-pagination');
         pagination.addEventListener('click',SearchDataPage);
@@ -234,6 +259,16 @@ window.addEventListener('DOMContentLoaded', function() {
        currentCat=catNode.cloneNode(true);
        changeActiveCat(e.target.parentNode);
        SearchData(false,true);
+       if(document.getElementsByClassName('mobile')[0].style.display!='none'){
+           var cat=document.getElementsByClassName('categor-wrapper-fix')[0];
+           var ul=document.getElementById('PR');
+           var pg=document.getElementById('light-pagination');
+           cat.style.display="none";
+           ul.style.display="block";
+           pg.style.display="block";
+
+       }
+
 
     }
 
