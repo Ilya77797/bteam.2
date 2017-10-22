@@ -264,7 +264,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     return;
                 };
 
-                var top = document.body.scrollTop;
+                var top = window.pageYOffset;
                 if (top > height) {
                     document.getElementsByClassName('catS')[0].classList.add('catSscroll');
                 }
@@ -287,7 +287,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     return;
                 };
 
-                var top = document.body.scrollTop;
+                var top = window.pageYOffset;
                 if (top > height) {
                     document.getElementsByClassName('topMenu')[0].classList.add('topMenuScroll');
                 }
@@ -351,9 +351,10 @@ window.addEventListener('DOMContentLoaded', function() {
         var li=document.createElement('li') //0
         li.classList.add('product-wrapper');
 
+
         var a=document.createElement('a');//1
         a.classList.add('product');
-        a.setAttribute('href','#');
+
 
         var divPrM=document.createElement('div');//2
         divPrM.classList.add('product-main');

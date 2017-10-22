@@ -1,6 +1,10 @@
 /* BUTTONS TO TOGGLE LAYOUT */
 
-
+#content{
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
 .topMenu{
     width: 100%;
     background-color: lightgray;
@@ -41,6 +45,7 @@
     text-decoration: none;
     color: black;
     font-size: 1.1em;
+
 }
 
 #categor-wrapper{
@@ -715,18 +720,4 @@ small.spPrice{
     }
 }
 
-/*
-#dataSearch{
-    position: relative;
-    display: block;
-    width: 300px;
-    margin: 0 auto;
-    border-radius: 20px;
 
-}
-#catSearch{
-    float: left;
-    margin-left: 0px;
-}
-
-*/
