@@ -250,6 +250,7 @@ window.addEventListener('DOMContentLoaded', function() {
         topMenu.addEventListener('click', topMenuFetch);
 
         document.body.addEventListener('scroll',()=> {
+
             var isMobile = getComputedStyle(document.getElementsByClassName('mobile')[0]);
             var cat=getComputedStyle(document.getElementsByClassName('categor-wrapper-fix')[0]);
             if (isMobile.display == 'none') return;
@@ -285,7 +286,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
             }
             else{//основной скроллинг
-                $('PR').hide();
+
                 var height = '';
                 try{
                     height=parseFloat(getComputedStyle(document.getElementById('header')).height);
@@ -311,13 +312,17 @@ window.addEventListener('DOMContentLoaded', function() {
                     }
                 }
 
-                $('PR').show();
+
+
             }
 
 
         });
 
-       /*  document.addEventListener('touchstart', function(event) {
+         document.addEventListener('touchstart', function(event) {
+         if(event.changedTouches[0].force>0.3){
+             $('PR').animate({transform: "scale(0.5)"},1000, 'linear');
+         }
          event.preventDefault();
          event.stopPropagation();
          startPoint.y=event.changedTouches[0].pageY;
@@ -330,12 +335,12 @@ window.addEventListener('DOMContentLoaded', function() {
          document.body.addEventListener('touchend', function(event) {
          event.preventDefault();
          event.stopPropagation();
-         var Scroller=document.body;
+         $('PR').animate({transform: "scale(1)"},100, 'linear');
 
          nowPoint=event.changedTouches[0];
          var yAbs = Math.abs(startPoint.y - nowPoint.pageY);
          if (nowPoint.pageY < startPoint.y){
-            $(Scroller).scrollTo();
+
 
 
 
@@ -345,7 +350,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
          }
 
-         }, false);*/
+         }, true);
 
     }
 
