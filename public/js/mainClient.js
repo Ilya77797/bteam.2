@@ -285,9 +285,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
             }
             else{//основной скроллинг
-                var PRSection=document.getElementById('PR');
-                var Scroller=document.body;
-                naturalScroll.scrollTop(PRSection, PRSection.viewportTopLocation+200);
+
                 var height = '';
                 try{
                     height=parseFloat(getComputedStyle(document.getElementById('header')).height);
@@ -319,7 +317,6 @@ window.addEventListener('DOMContentLoaded', function() {
 
         });
 
-        /*
          document.addEventListener('touchstart', function(event) {
          event.preventDefault();
          event.stopPropagation();
@@ -331,32 +328,23 @@ window.addEventListener('DOMContentLoaded', function() {
 
          }, false);
          document.body.addEventListener('touchend', function(event) {
-         var li=event.target;
-         while(li.nodeName!='LI'&&li.nodName!='BODY')
-         li=li.parentElement;
-         if(li.nodeName=='BODY')
-         return
-
          event.preventDefault();
          event.stopPropagation();
+         var Scroller=document.body;
+
          nowPoint=event.changedTouches[0];
          var yAbs = Math.abs(startPoint.y - nowPoint.pageY);
          if (nowPoint.pageY < startPoint.y){
-         var a=$('PR').scrollTop();
-         var aaa=document.getElementById('content');
-         var ba=$('body').scrollTop();
-         $('body').animate({scrollTop:nowPoint.pageY+200},'smooth' , 700);
+             naturalScroll.scrollTop(Scroller, nowPoint.pageY+300, 300);
 
 
 
          }
          else{
-         $('content').animate({scrollTop:nowPoint.pageY-200}, 'smooth' , 700);
-
+             naturalScroll.scrollTop(Scroller, nowPoint.pageY-300, 300);
          }
 
          }, false);
-         */
 
     }
 
