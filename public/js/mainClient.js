@@ -285,7 +285,9 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
             }
             else{//основной скроллинг
-                $("PR").prop("disabled", true);
+                var PRSection=document.getElementById('PR');
+                var Scroller=document.body;
+                naturalScroll.scrollTop(PRSection, PRSection.viewportTopLocation+200);
                 var height = '';
                 try{
                     height=parseFloat(getComputedStyle(document.getElementById('header')).height);
@@ -311,7 +313,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     }
                 }
 
-                $("PR").prop("disabled", false);
+
             }
 
 
