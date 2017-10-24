@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', function() {
-
+    var startPoint={};
     var currentCat=null;
     addEvents();
     SearchData(false,true);
@@ -263,9 +263,16 @@ window.addEventListener('DOMContentLoaded', function() {
                 catch (e){
                     return;
                 };
+                try {
+                    document.getElementsByClassName('topMenu')[0].classList.remove('topMenuScroll');
+                }
+                catch (e){
 
-                var top = window.pageYOffset;
-                if (top > height) {
+                }
+                var viewportOffset = document.getElementById('categor-wrapper').getBoundingClientRect();
+                var top = viewportOffset.top;
+
+                if (top <0) {
                     document.getElementsByClassName('catS')[0].classList.add('catSscroll');
                 }
                 else {
@@ -278,7 +285,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
             }
             else{//основной скроллинг
-
+                $("PR").prop("disabled", true);
                 var height = '';
                 try{
                     height=parseFloat(getComputedStyle(document.getElementById('header')).height);
@@ -286,9 +293,13 @@ window.addEventListener('DOMContentLoaded', function() {
                 catch (e){
                     return;
                 };
+                var s=document.body.scrollTop;
+                var viewportOffset = document.getElementById('PR').getBoundingClientRect();
+                var top = viewportOffset.top;
 
-                var top = window.pageYOffset;
-                if (top > height) {
+                var pbb=PR.clientHeight;
+                var y=this.scrollY;
+                if (top <0) {
                     document.getElementsByClassName('topMenu')[0].classList.add('topMenuScroll');
                 }
                 else{
@@ -300,10 +311,50 @@ window.addEventListener('DOMContentLoaded', function() {
                     }
                 }
 
-
+                $("PR").prop("disabled", false);
             }
 
+
         });
+
+        /*
+         document.addEventListener('touchstart', function(event) {
+         event.preventDefault();
+         event.stopPropagation();
+         startPoint.y=event.changedTouches[0].pageY;
+         }, false);
+         document.addEventListener('touchmove', function(event) {
+         event.preventDefault();
+         event.stopPropagation();
+
+         }, false);
+         document.body.addEventListener('touchend', function(event) {
+         var li=event.target;
+         while(li.nodeName!='LI'&&li.nodName!='BODY')
+         li=li.parentElement;
+         if(li.nodeName=='BODY')
+         return
+
+         event.preventDefault();
+         event.stopPropagation();
+         nowPoint=event.changedTouches[0];
+         var yAbs = Math.abs(startPoint.y - nowPoint.pageY);
+         if (nowPoint.pageY < startPoint.y){
+         var a=$('PR').scrollTop();
+         var aaa=document.getElementById('content');
+         var ba=$('body').scrollTop();
+         $('body').animate({scrollTop:nowPoint.pageY+200},'smooth' , 700);
+
+
+
+         }
+         else{
+         $('content').animate({scrollTop:nowPoint.pageY-200}, 'smooth' , 700);
+
+         }
+
+         }, false);
+         */
 
     }
 
@@ -340,6 +391,7 @@ window.addEventListener('DOMContentLoaded', function() {
         });
 
         parrent.classList.add('categor-item-active');
+        document.getElementById('dataSearch').searchD.value='';
     }
 
     function SearchDataPage(e) {
@@ -463,8 +515,10 @@ window.addEventListener('DOMContentLoaded', function() {
             a.appendChild(divPrM);
                 divPrM.appendChild(divPrP);
                     divPrP.appendChild(img);
-                    divPrP.appendChild(divPrPr);
+                    if(item.status!='Ожидается') {
+                        divPrP.appendChild(divPrPr);
                         divPrPr.appendChild(span);
+                    }
                 divPrM.appendChild(divPrT);
                     divPrT.appendChild(divPrN);
                     divPrT.appendChild(amount);
@@ -508,13 +562,13 @@ window.addEventListener('DOMContentLoaded', function() {
             var ul=document.getElementById('PR');
             var pg=document.getElementById('light-pagination');
             if(cat.style.display=="none"){
-                cat.style.display="block";
+                $(cat).slideToggle(300);
                 ul.style.display="none";
                 pg.style.display="none";
 
             }
             else {
-                cat.style.display="none";
+                $(cat).slideToggle(300);
                 ul.style.display="block";
                 pg.style.display="block";
 
