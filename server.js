@@ -49,5 +49,5 @@ app.use(async (ctx, next) => {
 
 
 app.use(router.routes());
-app.listen(3000);
+app.listen(config1.port);
 
