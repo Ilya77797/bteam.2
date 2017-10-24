@@ -285,7 +285,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
             }
             else{//основной скроллинг
-
+                $('PR').hide();
                 var height = '';
                 try{
                     height=parseFloat(getComputedStyle(document.getElementById('header')).height);
@@ -311,13 +311,13 @@ window.addEventListener('DOMContentLoaded', function() {
                     }
                 }
 
-
+                $('PR').show();
             }
 
 
         });
 
-         document.addEventListener('touchstart', function(event) {
+       /*  document.addEventListener('touchstart', function(event) {
          event.preventDefault();
          event.stopPropagation();
          startPoint.y=event.changedTouches[0].pageY;
@@ -335,16 +335,17 @@ window.addEventListener('DOMContentLoaded', function() {
          nowPoint=event.changedTouches[0];
          var yAbs = Math.abs(startPoint.y - nowPoint.pageY);
          if (nowPoint.pageY < startPoint.y){
-             naturalScroll.scrollTop(Scroller, nowPoint.pageY+300, 300);
+            $(Scroller).scrollTo();
 
 
 
          }
          else{
-             naturalScroll.scrollTop(Scroller, nowPoint.pageY-300, 300);
+
+
          }
 
-         }, false);
+         }, false);*/
 
     }
 
