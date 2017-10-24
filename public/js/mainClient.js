@@ -319,7 +319,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         });
 
-         document.addEventListener('touchstart', function(event) {
+        /* document.addEventListener('touchstart', function(event) {
          if(event.changedTouches[0].force>0.3){
              $('PR').animate({transform: "scale(0.5)"},1000, 'linear');
          }
@@ -350,7 +350,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
          }
 
-         }, true);
+         }, true);*/
 
     }
 
