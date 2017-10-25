@@ -590,8 +590,8 @@ window.addEventListener('DOMContentLoaded', function() {
         }
 
     }
-
-    /*clearing search*/
+/*
+    /!*clearing search*!/
     function tog(v){return v?'addClass':'removeClass';}
     $(document).on('input', '.clearable', function(){
         $(this)[tog(this.value)]('x');
@@ -609,7 +609,7 @@ window.addEventListener('DOMContentLoaded', function() {
             catForm.dispatchEvent(e);
 
         }
-    });
+    });*/
 
 });
 
