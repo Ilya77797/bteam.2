@@ -47,7 +47,7 @@ html
                 img(src='images/mobile.png')#mobMenu.mobile
                 div.dataS
                     form(action="/searchData" method="POST" id="dataSearch")
-                        input(name="searchD"  placeholder="Поиск товаров")
+                        input.clearable(name="searchD"  placeholder="Поиск товаров")
                 a(href="/corzina")
                     img(src='images/corzina.png').corzina
 
@@ -57,7 +57,7 @@ html
                 div#categor-wrapper
                     div.catS
                         form(action="/searchCat" method="POST" id="catSearch")
-                            input(name="search"  placeholder="Поиск в категориях" class="catS" autocomplete="off")
+                            input.clearable(name="search"  placeholder="Поиск в категориях" class="catS" autocomplete="off")
                     div#categor
 
 

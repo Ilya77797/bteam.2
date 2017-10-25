@@ -28,8 +28,17 @@ window.addEventListener('DOMContentLoaded', function() {
                     var div_2=document.createElement('div');
                     div_2.textContent='Нет таких категорий';
                     div.appendChild(div_2);
+
                 }
                 else{
+                    var div_2=document.createElement('div');
+                    div_2.classList.add('categor-item');
+                    var a = document.createElement('a');
+                    a.setAttribute('data-info', 'allProducts');
+                    a.setAttribute('href','#');
+                    a.textContent = 'Все товары ';
+                    div_2.appendChild(a);
+                    div.appendChild(div_2);
                     mass.forEach(function (item) {
                         var div_2=document.createElement('div');
                         div_2.classList.add('categor-item');
@@ -362,6 +371,10 @@ window.addEventListener('DOMContentLoaded', function() {
         if(e.target.nodeName!='A')
             return
        var catNode=e.target;
+        if(catNode.dataset.info=='allProducts'){
+            location.reload();
+
+        }
        currentCat=catNode.cloneNode(true);
        changeActiveCat(e.target.parentNode);
        SearchData(false,true);
@@ -390,6 +403,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         parrent.classList.add('categor-item-active');
         document.getElementById('dataSearch').searchD.value='';
+
     }
 
     function SearchDataPage(e) {
@@ -576,6 +590,26 @@ window.addEventListener('DOMContentLoaded', function() {
         }
 
     }
+
+    /*clearing search*/
+    function tog(v){return v?'addClass':'removeClass';}
+    $(document).on('input', '.clearable', function(){
+        $(this)[tog(this.value)]('x');
+    }).on('mousemove', '.x', function( e ){
+        $(this)[tog(this.offsetWidth-18 < e.clientX-this.getBoundingClientRect().left)]('onX');
+    }).on('touchstart click', '.onX', function( ev ){
+        ev.preventDefault();
+        $(this).removeClass('x onX').val('').change();
+        if(ev.target.name=='searchD'){
+            SearchData(false,true);
+        }
+        else if(ev.target.name=='search'){
+            var catForm=document.getElementById('catSearch');
+            var e=new Event('submit');
+            catForm.dispatchEvent(e);
+
+        }
+    });
 
 });
 
