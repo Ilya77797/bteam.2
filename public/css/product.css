@@ -589,6 +589,9 @@ small.spPrice{
         overflow-y: scroll;
 
     }
+    #categor-wrapper{
+        height: 100vh;
+    }
 
 
 
@@ -642,6 +645,7 @@ small.spPrice{
         position: fixed;
         bottom: 0;
         z-index: 2;
+        font-size: 0.5em;
     }
 
 

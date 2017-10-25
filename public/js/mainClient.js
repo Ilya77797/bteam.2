@@ -101,6 +101,8 @@ window.addEventListener('DOMContentLoaded', function() {
                 if(!f){//Запрос не по номеру страницы
                     if(pages>1){
                         $('#light-pagination').pagination({
+                            displayedPages: 3,
+                            edges:1,
                             items: pages,
                             cssStyle: 'light-theme',
                             prevText: 'Пред',
