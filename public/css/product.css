@@ -576,14 +576,17 @@ small.spPrice{
 @media only screen and (max-width: 801px) {
     .categor-wrapper-fix{
         display: none;
+        min-height: 10px;
         width: 100%;
-        height: auto;
+        height: 100%;
 
     }
+
     #categor-wrapper, #categor, .catS{
         min-width: 100%;
+        min-height: 10px;
         height: auto;
-        overflow-y: visible;
+        overflow-y: scroll;
 
     }
 
@@ -627,12 +630,18 @@ small.spPrice{
     .products {
         list-style: none;
         padding: 0;
-        min-height: 100%;
-        overflow-y: auto;
+       /* min-height: 100%;*/
+        max-height: 100vh;
+        overflow-y: scroll;
         -webkit-overflow-scrolling:touch;
 
         /*max-height:650px ;
         overflow-y: scroll;*/
+    }
+    #light-pagination{
+        position: fixed;
+        bottom: 0;
+        z-index: 2;
     }
 
 
@@ -652,6 +661,7 @@ small.spPrice{
         display: none;
         height: auto;
     }
+
     .mobile{
         display: inline-block;
         width: 5%;

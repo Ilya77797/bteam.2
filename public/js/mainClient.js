@@ -557,7 +557,8 @@ window.addEventListener('DOMContentLoaded', function() {
             var cat=document.getElementsByClassName('categor-wrapper-fix')[0];
             var ul=document.getElementById('PR');
             var pg=document.getElementById('light-pagination');
-            if(cat.style.display=="none"){
+            var catInfo=getComputedStyle(cat);
+            if(catInfo.display=="none"){
                 $(cat).slideToggle(300);
                 ul.style.display="none";
                 pg.style.display="none";
