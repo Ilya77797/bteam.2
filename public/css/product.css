@@ -592,7 +592,9 @@ small.spPrice{
         height: 100%;
 
     }
-
+    html, body {
+        overflow-y: hidden;
+    }
     /* Возможно надо будет настроить и для других расширений (Размер текста в категориях) */
     #categor a{
         text-decoration: none;
@@ -611,7 +613,7 @@ small.spPrice{
 
     }
     #categor-wrapper{
-        height: 70vh;
+        height: 75vh;
     }
 
 
@@ -655,7 +657,7 @@ small.spPrice{
         list-style: none;
         padding: 0;
        /* min-height: 100%;*/
-        max-height: 100vh;
+        max-height: 90vh;
         overflow-y: scroll;
         -webkit-overflow-scrolling:touch;
 
