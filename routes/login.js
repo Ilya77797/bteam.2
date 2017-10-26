@@ -5,6 +5,8 @@ const mongoose=require('mongoose');
 exports.post = compose([
   passport.authenticate('local'),
   async (ctx, next) => {
+  console.log('ctx auth: ',ctx.isAuthenticated());
+  console.log('pas: ',passport.authenticate('local'));
     if (ctx.state.user) {
         ctx.redirect('/');
     } else {
