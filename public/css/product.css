@@ -11,6 +11,13 @@
 .clearable.onX{ cursor: pointer; }              !* (jQ) hover cursor style *!
 .clearable::-ms-clear {display: none; width:0; height:0;} !* Remove IE default X *!*/
 
+.loginForm{
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    text-align: center;
+
+}
 #content{
     height: 100%;
     overflow-x: hidden;
@@ -681,6 +688,17 @@ small.spPrice{
     #header{
         height: 30px;
     }
+    .loginForm input, button{
+        display: inline-block;
+    }
+    .loginForm{
+        width: 100%;
+    }
+    #loginForm{
+        text-align: center;
+
+    }
+
 
 
 

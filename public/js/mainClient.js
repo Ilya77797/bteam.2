@@ -330,38 +330,12 @@ window.addEventListener('DOMContentLoaded', function() {
 
         });
 
-        /* document.addEventListener('touchstart', function(event) {
-         if(event.changedTouches[0].force>0.3){
-             $('PR').animate({transform: "scale(0.5)"},1000, 'linear');
-         }
-         event.preventDefault();
-         event.stopPropagation();
-         startPoint.y=event.changedTouches[0].pageY;
-         }, false);
-         document.addEventListener('touchmove', function(event) {
-         event.preventDefault();
-         event.stopPropagation();
+        /*Listening to the orientation change*/
+        window.addEventListener("orientationchange", function() {
+            if(window.orientation==90||window.orientation==-90||window.orientation==0)
+                location.reload();
+        }, false);
 
-         }, false);
-         document.body.addEventListener('touchend', function(event) {
-         event.preventDefault();
-         event.stopPropagation();
-         $('PR').animate({transform: "scale(1)"},100, 'linear');
-
-         nowPoint=event.changedTouches[0];
-         var yAbs = Math.abs(startPoint.y - nowPoint.pageY);
-         if (nowPoint.pageY < startPoint.y){
-
-
-
-
-         }
-         else{
-
-
-         }
-
-         }, true);*/
 
     }
 
@@ -610,6 +584,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         }
     });*/
+
 
 });
 
