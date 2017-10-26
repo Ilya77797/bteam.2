@@ -10,7 +10,7 @@ exports.post = compose([
     } else {
       ctx.status = 401;
       ctx.body = { error: info };
-      console.log('Ошибка: ',info);
+
     }
   }
 ]);
