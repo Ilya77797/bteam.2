@@ -686,7 +686,7 @@ small.spPrice{
 
     }
     #header{
-        height: 50px;
+        height: 30px;
     }
     .loginForm input, button{
         display: inline-block;
@@ -787,7 +787,7 @@ small.spPrice{
 
     }
     #header{
-        height: 30px;
+        height: 50px;
     }
 }
 
