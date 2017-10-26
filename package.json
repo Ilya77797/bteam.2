@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "koa-compose":"^4.0.0",
     "bunyan": "^1.8.10",
     "clarify": "^2.0.0",
     "co-busboy": "^1.3.1",
