@@ -686,10 +686,13 @@ small.spPrice{
 
     }
     #header{
-        height: 30px;
+        height: 40px;
     }
     .loginForm input, button{
         display: inline-block;
+    }
+    .loginForm h2{
+        display: none;
     }
     .loginForm{
         width: 100%;
