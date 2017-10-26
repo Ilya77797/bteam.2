@@ -23,7 +23,9 @@
     "koa-compose":"4.0.0",
     "crypto": "1.0.1",
     "lodash":"4.17.4",
-    "assert":"^1.4.1"
+    "assert":"^1.4.1",
+    "trace":"3.0.0",
+    "clarify":"2.0.0"
   },
   "main": "server.js",
   "directories": {
