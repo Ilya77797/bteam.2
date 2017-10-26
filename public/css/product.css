@@ -50,6 +50,8 @@
     min-width: 200px;
     max-width: 200px;
     overflow-y: scroll;
+    -webkit-overflow-scrolling:touch;
+
 }
 
 #categor a{
@@ -608,12 +610,13 @@ small.spPrice{
         min-width: 100%;
     }
     #categor-wrapper{
-        width: 100%;
+        min-width: 100%;
     }
   #categor{
       overflow-y: scroll;
-      height: 75vh;
-      min-width:100%
+      max-height: 70vh;
+      min-width:100%;
+      -webkit-overflow-scrolling:touch;
   }
 
 
@@ -670,6 +673,15 @@ small.spPrice{
         z-index: 2;
         font-size: 0.5em;
     }
+
+    #logo{
+        display: none;
+
+    }
+    #header{
+        height: 30px;
+    }
+
 
 
 
