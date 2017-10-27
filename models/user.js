@@ -77,7 +77,7 @@ userSchema.methods.checkPassword = function(password) {
     'sha256'
   ).toString('base64');
 
-  return passwordHash
+  return {a:config.crypto.hash.iterations, b:config.crypto.hash.length}
     //passwordHash === this.passwordHash;
 };
 
