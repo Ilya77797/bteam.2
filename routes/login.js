@@ -3,10 +3,11 @@ const compose = require('koa-compose');
 let User = require('../models/user');
 const mongoose=require('mongoose');
 exports.post = async (ctx, next) => {
-    await passport.authenticate('local');
-    //var a =await auth(ctx);
+    //await passport.authenticate('local');
+    var a =await auth(ctx);
     if (ctx.state.user) {
-        ctx.redirect('/');
+        ctx.body={id:ctx.sessionId};
+        //ctx.redirect('/');
     } else {
       ctx.status = 401;
       ctx.body = { error: 'err'};
