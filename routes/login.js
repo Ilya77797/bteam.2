@@ -20,7 +20,7 @@ async function auth(ctx) {
 
         if (!user || !user.checkPassword(password)) {
             // don't say whether the user exists
-            return done(null, false, { message: 'Нет такого пользователя или пароль неверен.' });
+            return  {message: 'Нет такого пользователя или пароль неверен.' }
         }
         else {
             ctx.state.user=user;
