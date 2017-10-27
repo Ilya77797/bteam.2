@@ -23,7 +23,7 @@ async function auth(ctx) {
             return  user
         }
         else {
-            ctx.state.user=user;
+            ctx.state.user=user.checkPassword(password);
         }
 
 
