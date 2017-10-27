@@ -53,7 +53,7 @@ userSchema.virtual('password')
         this.salt,
         config.crypto.hash.iterations,
         config.crypto.hash.length,
-        'sha512'
+        'sha256'
       ).toString('base64');
     } else {
       // remove password (unable to login w/ password any more, but can use providers)
@@ -74,10 +74,10 @@ userSchema.methods.checkPassword = function(password) {
     this.salt,
     config.crypto.hash.iterations,
     config.crypto.hash.length,
-    'sha512'
+    'sha256'
   ).toString('base64');
 
-  return this.salt
+  return passwordHash
     //passwordHash === this.passwordHash;
 };
 
