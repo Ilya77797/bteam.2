@@ -25,7 +25,7 @@ async function auth(ctx) {
         else {
             ctx.state.user=user;
         }
-    
+
 
 
 }
