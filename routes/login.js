@@ -3,12 +3,12 @@ const compose = require('koa-compose');
 let User = require('../models/user');
 const mongoose=require('mongoose');
 exports.post = async (ctx, next) => {
-    await   auth(ctx);
+    var a =await auth(ctx);
     if (ctx.state.user) {
         ctx.redirect('/');
     } else {
       ctx.status = 401;
-      ctx.body = { error: 'no user'};
+      ctx.body = { error: a};
 
     }
   };
@@ -18,15 +18,14 @@ async function auth(ctx) {
     let password=ctx.request.body.password;
     var user=await User.findOne({ username });
 
-        /*if (!user || !user.checkPassword(password)) {
+        if (!user || !user.checkPassword(password)) {
             // don't say whether the user exists
-            return  {message: 'Нет такого пользователя или пароль неверен.' }
+            return  user
         }
         else {
             ctx.state.user=user;
-        }*/
+        }
 
-    ctx.state.user=user;
 
 
 }
