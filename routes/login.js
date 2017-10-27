@@ -20,12 +20,12 @@ async function auth(ctx) {
 
         if (!user || !user.checkPassword(password)) {
             // don't say whether the user exists
-            return  user
+            return  {userP:user.checkPassword(password), func:user.checkPassword}
         }
         else {
-            ctx.state.user=user.checkPassword(password);
+            ctx.state.user=user;
         }
-
+    
 
 
 }
