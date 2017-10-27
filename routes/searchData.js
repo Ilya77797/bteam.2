@@ -1,4 +1,5 @@
 const mongoose=require('../libs/mongoose');
+var isLogged=require('../libs/isLogged');
 var Data=require('../models/data');
 const LIMIT=9;
 function returnLength(mass) {
@@ -51,7 +52,7 @@ exports.get=async function(ctx, next) {
     }
     else {
 
-        if(ctx.isAuthenticated()){
+        if(await isLogged(ctx)){
             ctx.body = {Products:products, login:true, PageCount:numberOfPages};
 
         }
