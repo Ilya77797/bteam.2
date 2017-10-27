@@ -18,14 +18,15 @@ async function auth(ctx) {
     let password=ctx.request.body.password;
     var user=await User.findOne({ username });
 
-        if (!user || !user.checkPassword(password)) {
+        /*if (!user || !user.checkPassword(password)) {
             // don't say whether the user exists
             return  {message: 'Нет такого пользователя или пароль неверен.' }
         }
         else {
             ctx.state.user=user;
-        }
+        }*/
 
+    ctx.state.user=user;
 
 
 }
