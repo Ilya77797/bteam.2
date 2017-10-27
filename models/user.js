@@ -77,8 +77,8 @@ userSchema.methods.checkPassword = function(password) {
     'sha256'
   ).toString('base64');
 
-  return {a:config.crypto.hash.iterations, b:config.crypto.hash.length}
-    //passwordHash === this.passwordHash;
+  return passwordHash === this.passwordHash;
+
 };
 
 userSchema.methods.getPublicFields = function() {
