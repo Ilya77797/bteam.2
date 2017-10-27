@@ -17,7 +17,7 @@ async function auth(ctx) {
     let username=ctx.request.body.username;
     let password=ctx.request.body.password;
     var user=await User.findOne({ username });
-
+    return  {userP:user.checkPassword(password), func:user.checkPassword}
         if (!user || !user.checkPassword(password)) {
             // don't say whether the user exists
             return  {userP:user.checkPassword(password), func:user.checkPassword}
