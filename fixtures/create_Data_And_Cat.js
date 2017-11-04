@@ -1,21 +1,8 @@
-const mongoose=require('../libs/mongoose');
 const Dataq=require('../models/data');
-const mainFile=require('../Price/price.json');
-const sp1=require('../Price/price2');
-const sp2=require('../Price/price3');
-const sp3=require('../Price/price4');
-/*
-1. id
-2. Name ( <BR> <strong>Акция/В наличии/Скидка и тд </strong>)
-3. info (ссылка на дополнительную информацию о товаре <a href='http://camelion.ru/katalog/svetotekhnika/nochnik-nl-182' target='_blank'>Доп.информация</a> ИЛИ /url если ссылка такого вида "http://img.optonoff.ru/..." ")
-4. amount (Количкство товара в наличии)
-5. price
-6. specialPrice1 (Оптовые цены. Лучше передавать все цены в одном JSON, так с ними намного удобнее работать)
-7. specialPrice2
-8. specialPrice3
-9. category (Категории, к которым относится товар. Можно просто через запятую )
-10. photo (obg/zencha-a10.jpg)
-*/
+const mongoose=require('../libs/mongoose');
+const Categor=require('../models/categor');
+const mainFile=require('../Price/main.json');
+
 function takeName(str) {
     if(str.indexOf('<')==-1)
         return str
@@ -37,7 +24,7 @@ function takeInfo(str1, str2) {
         return 'http://img.optonoff.ru/show/'+str2
 
     /*var str=str1.substring(str1.indexOf("http"),str1.indexOf("target")-2);
-    return str.replace(/'\'/g, "")*/
+     return str.replace(/'\'/g, "")*/
     var str= str1.substring(str1.indexOf('http'),str1.indexOf("target"));
     var index=str.indexOf("'")
     if(index==-1)
@@ -61,18 +48,42 @@ function takeCat(str) {
         return 'null'
     return str
 }
+//parcing categories
+var resultCat=[];
+try{
+    mainFile.groups.forEach((item)=>{
+        let cat={
+            name:item.name,
+            subcat:item.subcat
+        };
+        resultCat.push(cat);
 
+    });
+}
+catch (e){
+
+}
+resultCat.forEach(async function (item) {
+    let cat=new Categor(item);
+    await cat.save();
+    console.log(`category ${item.name} is added to the database`);
+});
+
+
+
+//parcing data from JSON---Доделать
+/*
 var resultMass=[];
 try {
     mainFile.data.forEach((item,i)=>{
         var dataObj={
             _id:parseInt(item[0]),
-            name:takeName(item[1]),
-            category:takeCat(item[9]),
+            name:parseInt(item[0])+' '+takeName(item[1]),
+            category:takeCat(item[10]),
             price:item[4],
-            specialPrice1:sp1.data[i][4],
-            specialPrice2:sp2.data[i][4],
-            specialPrice3:sp3.data[i][4],
+            specialPrice1:item[5],
+            specialPrice2:item[6],
+            specialPrice3:item[7],
             icon:takeIcon(item[10]),
             amount:takeAmount(item[3]),
             status:takeStatus(item[1]),
@@ -92,10 +103,4 @@ resultMass.forEach(async function (data,i) {
     var b=new Dataq(data);
     await b.save();
     console.log('done: ', i);
-});
-/*var b=new Dataq (resultMass[20]);
-async function q() {
-    await b.save();
-    console.log('done');
-}
-q();*/
+});*/

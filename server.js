@@ -37,6 +37,8 @@ router.get('/registrate', require('./routes/registrate').get);
 router.post('/registrate', require('./routes/registrate').post);
 router.post('/searchCat', require('./routes/searchCat').get);
 router.post('/searchData', require('./routes/searchData').get);
+router.get('/corzina', require('./routes/korzina').get);
+router.post('/corzina', require('./routes/korzina').post);
 
 
 

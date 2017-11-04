@@ -1,0 +1,45 @@
+doctype html
+html
+
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, height=device-height initial-scale=1.0, maximum-scale=1.0")
+        title Заказ товара BATTERY TEAM - Тула
+        link(href="css/font.css" rel="stylesheet" type="text/css")
+        link(href="css/style.min.css" rel="stylesheet" type="text/css")
+        link(href="css/product.css" rel="stylesheet" type="text/css")
+        link(href="css/hm-style.min.css" rel="stylesheet" type="text/css")
+        link(href="css/pagination.css" rel="stylesheet" type="text/css")
+        link(rel="shortcut icon" type="image/x-icon" href="/favicon.ico")
+        script(src="js/jquery.min.js")
+        script(src="js/korzina.js")
+        script(src="https://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js")
+
+
+    body.hm
+        div#content
+            header
+                div#header
+                    div#logo.logo
+                        h1
+
+                            a(href="http://www.bteam.ru/") BATTERY TEAM
+                        h3
+                            a(href="http://www.bteam.ru/") Тульский Региональный Филиал
+
+                    if(isLoged)
+                        div.loginForm
+                            form(action="/logout" method="POST" id="loginForm")
+                                h2 Добро пожаловать!
+                                button(type="submit") Выйти
+                    else
+                        div.loginForm
+                            form(action="/login" method="POST" id="loginForm")
+                                h2 Вход
+                                input(name="username" placeholder="Имя пользователья")
+                                input(name="password" placeholder="Пароль")
+                                button(type="submit") Войти
+            div(style='clear:both')
+                hr.line
+            h3 Товары в корзине:
+            ul#PR.products.clearfix

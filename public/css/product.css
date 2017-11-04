@@ -18,6 +18,12 @@
     text-align: center;
 
 }
+.vKorzine{
+    color: green;
+    font-weight: bold;
+    font-size: 1.5em;
+    text-align: center;
+}
 #content{
     height: 100%;
     overflow-x: hidden;
@@ -56,16 +62,19 @@
     max-height: 650px;
     min-width: 200px;
     max-width: 200px;
-    overflow-x: hidden;
+    overflow-x:visible;
     overflow-y: scroll;
     -webkit-overflow-scrolling:touch;
+
 
 }
 
 #categor a{
     text-decoration: none;
     color: black;
-    font-size: 1.1em;
+    font-size: 1.2em;
+    padding-right: 10px;
+
 
 }
 
@@ -84,7 +93,61 @@
 .categor-item{
     margin-top: 2px;
     background-color: white;
+    min-height: 40px;
+    line-height: 20px;
     opacity: 0.7;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+
+}
+.categor-item img{/*icon for subcats*/
+    display: inline-block;
+    height: 1.2em;
+    opacity: 0.6;
+    width: 3%;
+
+
+}
+
+.subcatHistory a{/*class for subcatHistory*/
+    text-decoration: underline !important;
+    color: blue !important;
+    font-size: 1.1em !important;
+}
+.subcatHistory a:after{
+    content: '/';
+}
+.subcatHistory a:hover{
+    color: green!important;
+}
+.subcatHistory:hover{
+    background-color: white !important;
+    opacity: 0.7 !important;
+}
+.curSubcat:first-child{
+    /*font-weight: bold;*/
+}
+.curSubcat{
+    background-color: white !important;
+
+}
+.curSubcatImg{
+    display: none !important;
+}
+/*.curSubcat div:before{
+ content: "-";
+}*/
+
+.curSubcatA{
+    display: none;
+}
+.curSubcat:hover{
+    background-color: white !important;
+    opacity: 1 !important;
+}
+.categor-item img:hover{
+    transform: scale(1.5);
 }
 
 .categor-item-active{
@@ -205,6 +268,7 @@
     transform: translateY(2em);
     opacity: 0;
 }
+
 
 .product:hover .product-preview {
     transform: translateY(0);
@@ -645,6 +709,7 @@ small.spPrice{
         background-color: white;
         opacity: 0.7;
     }
+
     .product:hover .product-photo img {
         transform: scale(1);
     }
@@ -700,6 +765,25 @@ small.spPrice{
     }
     #loginForm{
         text-align: center;
+
+    }
+
+    .categor-item img{/*icon for subcats*/
+        display: inline-block;
+        vertical-align: middle;
+        float: right;
+        opacity: 0.6;
+        width: 4%;
+        height: 1.4em;
+    }
+
+    #categor a{
+        text-decoration: none;
+        color: black;
+        vertical-align: middle;
+        font-size: 1.4em;
+
+
 
     }
 

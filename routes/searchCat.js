@@ -13,13 +13,30 @@ exports.get=async function(ctx, next) {
         ctx.body=['Нет таких категорий'];
     }
     else {
-        var cat2=cat.map((item)=>item.category);
-        ctx.body=cat2;
+        ctx.body=cat;
     }
 
 
 
 
 };
+
+function deepSearch(catregor, reg, resMass) {
+    if(catregor.name.match(req)){
+        resMass.push(catregor);
+    }
+    if(catregor.subcat==null)
+        return
+    else{
+        catregor.subcat.forEach((item)=>{
+            if(item.name.match(req)){
+                resMass.push(item);
+            }
+            else {
+                deepSearch(item,reg,resMass);
+            }
+        });
+    }
+}
 
 
