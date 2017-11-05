@@ -129,7 +129,8 @@
 .curSubcat{
     background-image: url("../images/cbg.png") !important;
     background-repeat: repeat !important;
-    height: auto;
+    height: 100% !important;
+    overflow-y: visible;
     overflow-x: hidden;
 
 }
@@ -769,11 +770,12 @@ small.spPrice{
 
     }
 
-    /*.categor-item img{!*icon for subcats*!
+    .categor-item img{/*icon for subcats*/
         display: inline-block;
         height: 1.2em;
         opacity: 0.6;
         width: 3%;
+        margin-right: 10px;
     }
 
     #categor a{
@@ -784,7 +786,7 @@ small.spPrice{
 
 
 
-    }*/
+    }
 
 
 

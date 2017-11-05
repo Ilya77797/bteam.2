@@ -4,6 +4,10 @@ window.addEventListener('DOMContentLoaded', function() {
         div:null,
         pointers:[]
     };
+    var touchCoords={//Координаты касания пальцем экрана
+        X:null,
+        Y:null
+    }
     var activeCatPointer=null; //Указатель на текущую категорию
     var currentCat=null;
     addEvents();
@@ -298,6 +302,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
 
+
         //for data
         var dataForm=document.getElementById('dataSearch');
         dataForm.searchD.addEventListener('keyup',function () {
@@ -333,7 +338,10 @@ window.addEventListener('DOMContentLoaded', function() {
         var cat=document.getElementById('categor');
         //event is also used for working with subcats
         cat.addEventListener('click', onclick);
-        //cat.addEventListener('mouseover', showSubcats);
+        //Мобильные события
+        cat.addEventListener('touchstart', handleTouchStart, false);
+        cat.addEventListener('touchmove', handleTouchMove, false);
+
 
         var PR=document.getElementById('PR');
         PR.addEventListener('click',openNewWindow);
@@ -420,6 +428,52 @@ window.addEventListener('DOMContentLoaded', function() {
 
     }
 
+    function handleTouchStart (e){
+        touchCoords.X= e.touches[0].clientX;
+        touchCoords.Y=e.touches[0].clientY;
+    }
+
+    function handleTouchStart(evt) {
+        xDown = evt.touches[0].clientX;
+        yDown = evt.touches[0].clientY;
+    };
+
+    function handleTouchMove(e) {
+        if ( ! touchCoords.X || ! touchCoords.Y ) {
+            return;
+        }
+
+        var xUp = e.touches[0].clientX;
+        var yUp = e.touches[0].clientY;
+
+        var xDiff = touchCoords.X - xUp;
+        var yDiff = touchCoords.Y - yUp;
+
+        if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+            if ( xDiff > 0 ) {
+                /* left swipe */
+                var newVisibleCat={
+                    pointer:historyCat.pointers[historyCat.pointers.length-2].div,
+                    index:historyCat.pointers.length-2
+                };
+                if(newVisibleCat=={}) return;
+                changeCurentCat(newVisibleCat);//Изменить текущую категорию и отрисовать это
+
+            } else {
+                /* right swipe */
+            }
+        } else {
+            if ( yDiff > 0 ) {
+                /* up swipe */
+            } else {
+                /* down swipe */
+            }
+        }
+        /* reset values */
+        xDown = null;
+        yDown = null;
+    };
+
     function changeDisplay(param, elem, count, flag) {
 
         if(flag!=undefined){
@@ -486,38 +540,43 @@ function getPointerFromHistoryCat(name) {
         if(e.target.parentNode.classList.contains('subcatHistory')){
             var newVisibleCat=getPointerFromHistoryCat(e.target.dataset.info);
             if(newVisibleCat=={}) return;
-            var count=0;
-            for(let i=historyCat.pointers.length-1;i>newVisibleCat.index;i--){//Удалить лишние указатели из объекта historyCat
-                if(historyCat.pointers[i].div!=null)
-                {
-                    let ch=historyCat.pointers[i].div.childNodes;//Убрать классы "текущих" категорий
-                    historyCat.pointers[i].div.classList.remove('curSubcat');
-                    ch[0].classList.remove('curSubcatA');
-                    ch[1].classList.remove('curSubcatImg');
-                }
-                historyCat.pointers.pop();
-                count++;
-            }
-            while (count>0){//Удалить лишние ссылки из объекта historyCat
-                historyCat.div.lastChild.remove();
-                count--;
-            }
-            if(historyCat.div.lastChild==null)
-                historyCat.div=null;
-            if(newVisibleCat.pointer==null){
-                let categor=document.getElementById('categor');
-                changeDisplay('none', categor, 100);//Скрыть все категории
-                changeDisplay('flex',categor,1, true);//Сделать видимыми нужные категории
-            }
-            else{
-                changeDisplay('none', newVisibleCat.pointer.parentNode, 100);//Скрыть все категории
-                changeDisplay('flex',newVisibleCat.pointer,1, true);//Сделать видимыми нужные категории
-            }
-            categor.style.display='block';//changing flex to block
-            e.target.parentNode.style.display='block';//changing flex to block
+            changeCurentCat(newVisibleCat);//Изменить текущую категорию и отрисовать это
+
         }
 
         searchDatabyCat(e);
+    }
+
+    function changeCurentCat(newVisibleCat) {
+        var count=0;
+        for(let i=historyCat.pointers.length-1;i>newVisibleCat.index;i--){//Удалить лишние указатели из объекта historyCat
+            if(historyCat.pointers[i].div!=null)
+            {
+                let ch=historyCat.pointers[i].div.childNodes;//Убрать классы "текущих" категорий
+                historyCat.pointers[i].div.classList.remove('curSubcat');
+                ch[0].classList.remove('curSubcatA');
+                ch[1].classList.remove('curSubcatImg');
+            }
+            historyCat.pointers.pop();
+            count++;
+        }
+        while (count>0){//Удалить лишние ссылки из объекта historyCat
+            historyCat.div.lastChild.remove();
+            count--;
+        }
+        if(historyCat.div.lastChild==null)
+            historyCat.div=null;
+        if(newVisibleCat.pointer==null){
+            let categor=document.getElementById('categor');
+            changeDisplay('none', categor, 100);//Скрыть все категории
+            changeDisplay('flex',categor,1, true);//Сделать видимыми нужные категории
+        }
+        else{
+            changeDisplay('none', newVisibleCat.pointer.parentNode, 100);//Скрыть все категории
+            changeDisplay('flex',newVisibleCat.pointer,1, true);//Сделать видимыми нужные категории
+        }
+        categor.style.display='block';//changing flex to block
+        document.getElementsByClassName('subcatHistory')[0].style.display='block';//changing flex to block
     }
 
     function searchDatabyCat(e){
