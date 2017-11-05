@@ -339,8 +339,8 @@ window.addEventListener('DOMContentLoaded', function() {
         //event is also used for working with subcats
         cat.addEventListener('click', onclick);
         //Мобильные события
-        cat.addEventListener('touchstart', handleTouchStart, false);
-        cat.addEventListener('touchmove', handleTouchMove, false);
+        document.addEventListener('touchstart', handleTouchStart, false);
+        document.addEventListener('touchmove', handleTouchMove, false);
 
 
         var PR=document.getElementById('PR');
@@ -429,19 +429,18 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     function handleTouchStart (e){
+        var isMobile = getComputedStyle(document.getElementsByClassName('mobile')[0]);
+        if(isMobile.display == 'none') return;
         touchCoords.X= e.touches[0].clientX;
         touchCoords.Y=e.touches[0].clientY;
     }
-
-    function handleTouchStart(evt) {
-        xDown = evt.touches[0].clientX;
-        yDown = evt.touches[0].clientY;
-    };
 
     function handleTouchMove(e) {
         if ( ! touchCoords.X || ! touchCoords.Y ) {
             return;
         }
+        var isMobile = getComputedStyle(document.getElementsByClassName('mobile')[0]);
+        if(isMobile.display == 'none') return;
 
         var xUp = e.touches[0].clientX;
         var yUp = e.touches[0].clientY;
