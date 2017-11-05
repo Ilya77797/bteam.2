@@ -125,27 +125,28 @@
     background-color: white !important;
     opacity: 0.7 !important;
 }
-.curSubcat:first-child{
-    /*font-weight: bold;*/
-}
+
 .curSubcat{
-    background-color: white !important;
+    background-image: url("../images/cbg.png") !important;
+    background-repeat: repeat !important;
+    height: auto;
+    overflow-x: hidden;
 
 }
 .curSubcatImg{
     display: none !important;
 }
-/*.curSubcat div:before{
- content: "-";
-}*/
+.curSubcat div{
+ height: 40px;
+ margin-top: 2px;
+ line-height: 1.2em;
+ opacity: 1;
+}
 
 .curSubcatA{
     display: none;
 }
-.curSubcat:hover{
-    background-color: white !important;
-    opacity: 1 !important;
-}
+
 .categor-item img:hover{
     transform: scale(1.5);
 }
@@ -155,7 +156,7 @@
     opacity: 0.8;
 }
 
-.categor-item:hover{
+.categor-item:hover:not(.curSubcat){
     background-color: darkgrey;
     opacity: 0.5;
 }
@@ -768,13 +769,11 @@ small.spPrice{
 
     }
 
-    .categor-item img{/*icon for subcats*/
+    /*.categor-item img{!*icon for subcats*!
         display: inline-block;
-        vertical-align: middle;
-        float: right;
+        height: 1.2em;
         opacity: 0.6;
-        width: 4%;
-        height: 1.4em;
+        width: 3%;
     }
 
     #categor a{
@@ -785,8 +784,7 @@ small.spPrice{
 
 
 
-    }
-
+    }*/
 
 
 

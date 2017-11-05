@@ -472,6 +472,8 @@ function getPointerFromHistoryCat(name) {
             if(histCat.id!='categor')
                 curentSubcat(parent);//Добавть класс для текущей категории
             renderHistoryCat(histCat);
+            document.getElementsByClassName('subcatHistory')[0].style.display='block';//changing flex to block
+
 
             return
         }
@@ -525,7 +527,7 @@ function getPointerFromHistoryCat(name) {
        changeActiveCat(e.target.parentNode);
        SearchData(false,true);
        var isMobile=getComputedStyle(document.getElementsByClassName('mobile')[0]);
-       if(isMobile.display!='none'){
+       if(isMobile.display!='none'&&!e.target.parentNode.classList.contains('subcatHistory')){
            var cat=document.getElementsByClassName('categor-wrapper-fix')[0];
            var ul=document.getElementById('PR');
            var pg=document.getElementById('light-pagination');
