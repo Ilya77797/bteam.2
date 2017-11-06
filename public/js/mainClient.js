@@ -7,7 +7,8 @@ window.addEventListener('DOMContentLoaded', function() {
     var touchCoords={//Координаты касания пальцем экрана
         X:null,
         Y:null
-    }
+    };
+    var isExecuted=false;//Был ли уже swipe. Чтобы не листалось сразу по многу страниц
     var activeCatPointer=null; //Указатель на текущую категорию
     var currentCat=null;
     addEvents();
@@ -429,6 +430,7 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     function handleTouchStart (e){
+        if(isExecuted) return;
         var isMobile = getComputedStyle(document.getElementsByClassName('mobile')[0]);
         if(isMobile.display == 'none') return;
         touchCoords.X= e.touches[0].clientX;
@@ -460,6 +462,11 @@ window.addEventListener('DOMContentLoaded', function() {
                 };
                 if(newVisibleCat=={}) return;
                 changeCurentCat(newVisibleCat);//Изменить текущую категорию и отрисовать это
+                isExecuted=true;
+                setTimeout(()=>{
+                    isExecuted=false;
+                },2000);
+
             }
         } else {
             if ( yDiff > 0 ) {
@@ -517,7 +524,7 @@ function getPointerFromHistoryCat(name) {
 
     function onclick(e) {
         //working with subcats
-        if(e.target.nodeName=="IMG"){//Свернуть/развернуть категории
+        if(e.target.nodeName=="IMG"||e.target.nodeName=='DIV'){//Свернуть/развернуть категории
             let parent=e.target.parentNode;
             var histCat=parent;
             changeDisplay('none', parent.parentNode, 100);//Скрыть все категории
