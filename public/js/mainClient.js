@@ -464,9 +464,6 @@ window.addEventListener('DOMContentLoaded', function() {
                 if(newVisibleCat=={}) return;
                 changeCurentCat(newVisibleCat);//Изменить текущую категорию и отрисовать это
                 isExecuted=true;
-                setTimeout(()=>{
-                    isExecuted=false;
-                },10000);
 
             }
         } else {
@@ -584,6 +581,7 @@ function getPointerFromHistoryCat(name) {
         }
         categor.style.display='block';//changing flex to block
         document.getElementsByClassName('subcatHistory')[0].style.display='block';//changing flex to block
+        isExecuted=false;
     }
 
     function searchDatabyCat(e){
