@@ -451,15 +451,15 @@ window.addEventListener('DOMContentLoaded', function() {
         if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
             if ( xDiff > 0 ) {
                 /* left swipe */
+
+            } else {
+                /* right swipe */
                 var newVisibleCat={
                     pointer:historyCat.pointers[historyCat.pointers.length-2].div,
                     index:historyCat.pointers.length-2
                 };
                 if(newVisibleCat=={}) return;
                 changeCurentCat(newVisibleCat);//Изменить текущую категорию и отрисовать это
-
-            } else {
-                /* right swipe */
             }
         } else {
             if ( yDiff > 0 ) {
