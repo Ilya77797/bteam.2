@@ -456,6 +456,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
             } else {
                 /* right swipe */
+                if(historyCat.pointers.length==0) return;
                 var newVisibleCat={
                     pointer:historyCat.pointers[historyCat.pointers.length-2].div,
                     index:historyCat.pointers.length-2
@@ -465,7 +466,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 isExecuted=true;
                 setTimeout(()=>{
                     isExecuted=false;
-                },2000);
+                },10000);
 
             }
         } else {
@@ -524,7 +525,7 @@ function getPointerFromHistoryCat(name) {
 
     function onclick(e) {
         //working with subcats
-        if(e.target.nodeName=="IMG"||e.target.nodeName=='DIV'){//Свернуть/развернуть категории
+        if(e.target.nodeName=="IMG"){//Свернуть/развернуть категории
             let parent=e.target.parentNode;
             var histCat=parent;
             changeDisplay('none', parent.parentNode, 100);//Скрыть все категории
