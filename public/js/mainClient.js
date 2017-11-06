@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', function() {
         X:null,
         Y:null
     };
-    var isExecuted=false;//Был ли уже swipe. Чтобы не листалось сразу по многу страниц
+
     var activeCatPointer=null; //Указатель на текущую категорию
     var currentCat=null;
     addEvents();
@@ -340,9 +340,9 @@ window.addEventListener('DOMContentLoaded', function() {
         //event is also used for working with subcats
         cat.addEventListener('click', onclick);
         //Мобильные события
-        document.addEventListener('touchstart', handleTouchStart, false);
+        /*document.addEventListener('touchstart', handleTouchStart, false);
         document.addEventListener('touchmove', handleTouchMove, false);
-
+*/
 
         var PR=document.getElementById('PR');
         PR.addEventListener('click',openNewWindow);
@@ -429,7 +429,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     }
 
-    function handleTouchStart (e){
+   /* function handleTouchStart (e){
         if(isExecuted) return;
         var isMobile = getComputedStyle(document.getElementsByClassName('mobile')[0]);
         if(isMobile.display == 'none') return;
@@ -450,12 +450,12 @@ window.addEventListener('DOMContentLoaded', function() {
         var xDiff = touchCoords.X - xUp;
         var yDiff = touchCoords.Y - yUp;
 
-        if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+        if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/!*most significant*!/
             if ( xDiff > 0 ) {
-                /* left swipe */
+                /!* left swipe *!/
 
             } else {
-                /* right swipe */
+                /!* right swipe *!/
                 if(historyCat.pointers.length==0) return;
                 var newVisibleCat={
                     pointer:historyCat.pointers[historyCat.pointers.length-2].div,
@@ -463,21 +463,21 @@ window.addEventListener('DOMContentLoaded', function() {
                 };
                 if(newVisibleCat=={}) return;
                 changeCurentCat(newVisibleCat);//Изменить текущую категорию и отрисовать это
-                isExecuted=true;
+
 
             }
         } else {
             if ( yDiff > 0 ) {
-                /* up swipe */
+                /!* up swipe *!/
             } else {
-                /* down swipe */
+                /!* down swipe *!/
             }
         }
-        /* reset values */
+        /!* reset values *!/
         xDown = null;
         yDown = null;
     };
-
+*/
     function changeDisplay(param, elem, count, flag) {
 
         if(flag!=undefined){
@@ -581,7 +581,7 @@ function getPointerFromHistoryCat(name) {
         }
         categor.style.display='block';//changing flex to block
         document.getElementsByClassName('subcatHistory')[0].style.display='block';//changing flex to block
-        isExecuted=false;
+
     }
 
     function searchDatabyCat(e){
