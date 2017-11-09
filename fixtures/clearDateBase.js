@@ -6,3 +6,4 @@ async function q1() {
 }
 
 q1();
+module.exports=q1;

@@ -1,7 +1,7 @@
 const Dataq=require('../models/data');
 const mongoose=require('../libs/mongoose');
 const Categor=require('../models/categor');
-const mainFile=require('../Price/main.json');
+const mainFile=require('../Price/last.json');
 
 function takeName(str) {
     if(str.indexOf('<')==-1)
@@ -18,25 +18,30 @@ function takeStatus(str) {
 }
 
 function takeInfo(str1, str2) {
-    if(str1==''||str1==undefined)
-        return 'null'
-    if(str1=='/url')
-        return 'http://img.optonoff.ru/show/'+str2
+    if(str1==''||str1==undefined){
+     if(str2==''||str2==undefined)
+         return 'null'
+     else
+         return str2
+    }
+
+
+    return mainFile.prefixes[0]+str1
 
     /*var str=str1.substring(str1.indexOf("http"),str1.indexOf("target")-2);
      return str.replace(/'\'/g, "")*/
-    var str= str1.substring(str1.indexOf('http'),str1.indexOf("target"));
+    /*var str= str1.substring(str1.indexOf('http'),str1.indexOf("target"));
     var index=str.indexOf("'")
     if(index==-1)
         return str
     else
-        return str.substring(0,index);
+        return str.substring(0,index);*/
 }
 
 function takeIcon(str) {
     if(str==''||str==undefined)
         return 'images/noPicture.png'
-    return 'http://img.optonoff.ru/'+str
+    return mainFile.prefixes[1]+str
 }
 
 function takeAmount(str) {
@@ -72,22 +77,26 @@ resultCat.forEach(async function (item) {
 
 
 //parcing data from JSON---Доделать
-/*
 var resultMass=[];
 try {
     mainFile.data.forEach((item,i)=>{
         var dataObj={
             _id:parseInt(item[0]),
-            name:parseInt(item[0])+' '+takeName(item[1]),
-            category:takeCat(item[10]),
-            price:item[4],
-            specialPrice1:item[5],
-            specialPrice2:item[6],
-            specialPrice3:item[7],
-            icon:takeIcon(item[10]),
-            amount:takeAmount(item[3]),
-            status:takeStatus(item[1]),
-            info:takeInfo(item[2], item[10]),
+            name:item[0]+' '+item[1],
+            status:item[2],
+            textDescription:item[3],
+            measure:item[4],
+            amount:item[5],
+            price:item[6],
+            specialPrice1:item[7],
+            specialPrice2:item[8],
+            specialPrice3:item[9],
+            specialPrice4:item[10],
+            minOrder:item[11],
+            category:takeCat(item[12]),
+            icon:takeIcon(item[13]),
+            info:takeInfo(item[13], item[14]),
+            index:i,
 
 
         };
@@ -103,4 +112,4 @@ resultMass.forEach(async function (data,i) {
     var b=new Dataq(data);
     await b.save();
     console.log('done: ', i);
-});*/
+});

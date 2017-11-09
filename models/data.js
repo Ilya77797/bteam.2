@@ -30,6 +30,9 @@ const dataShema=new mongoose.Schema({
     specialPrice3:{
         type:String
     },
+    specialPrice4:{
+      type:String
+    },
 
     icon:{
         type:String
@@ -46,11 +49,26 @@ const dataShema=new mongoose.Schema({
 
     info:{
         type:String
+    },
+
+        minOrder:{
+            type:String
+        } ,
+        measure:{
+            type:String
+        },
+        textDescription:{
+            type:String
+        },
+    index:{//Очередность в JSON файле
+        type: Number
     }
+
+
 
 
 },
 
-{timestamps: true});
+{});
 
 module.exports = mongoose.model('Product', dataShema);

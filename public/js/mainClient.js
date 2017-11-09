@@ -686,8 +686,20 @@ function getPointerFromHistoryCat(name) {
             productNAmeA.textContent=item.name;
             divPrN.appendChild(productNAmeA);
         }
-        else{
+        else{//Вывод текстового описания
             divPrN.textContent=item.name;
+            if(item.textDescription!=''){
+                    var spanDescription=document.createElement('span');
+                    spanDescription.classList.add('textDescription');
+                    spanDescription.textContent=item.textDescription;
+
+                    divPrP.appendChild(spanDescription);
+                    img.style.opacity="0.3";
+
+
+
+            }
+
         }
 
 
@@ -703,10 +715,22 @@ function getPointerFromHistoryCat(name) {
         var spanIcon=document.createElement('span');//5
         spanIcon.classList.add('icon');
         spanIcon.classList.add('icon-check');
-        spanIcon.textContent=item.status;
+
 
         var imgIcon=document.createElement('img');
-        switch(item.status){
+       if(item.status[2]=='1'){
+           imgIcon.setAttribute('src','images/comingSoon.png');//Ожидается
+           spanIcon.textContent='Ожидается';
+       }
+        else if(item.status[0]=='1'){
+                imgIcon.setAttribute('src','images/New.png');//Новинка
+                spanIcon.textContent='Новинка';
+       }
+       else if(item.status[1]=='1'){
+           imgIcon.setAttribute('src','images/onSale.png');//Акция
+           spanIcon.textContent='Акция';
+       }
+       /* switch(item.status){
             case 'Акция!': imgIcon.setAttribute('src','images/onSale.png');
                 break;
             case 'В наличии': imgIcon.setAttribute('src','images/inOrder.png');
@@ -715,7 +739,7 @@ function getPointerFromHistoryCat(name) {
                 break
             case 'Новинка':imgIcon.setAttribute('src','images/New.png');
                 break;
-        }
+        }*/
         imgIcon.classList.add('iconAvail');
 
         var spanPrPrice=document.createElement('span');//4
@@ -723,8 +747,8 @@ function getPointerFromHistoryCat(name) {
 
         if(login){
             var small=document.createElement('small');//5
-            if(item.status!='Ожидается')
-                small.textContent=`${item.price} руб /${item.specialPrice1} руб /${item.specialPrice2} руб /${item.specialPrice3} руб`;
+            if(item.status[2]!='1')
+                small.textContent=`${item.price} руб /${item.specialPrice1} руб /${item.specialPrice2} руб /${item.specialPrice3} руб/${item.specialPrice4} руб`;
             else
                 small.innerHTML="<br> <br>";
             spanPrPrice.appendChild(small);
@@ -757,7 +781,7 @@ function getPointerFromHistoryCat(name) {
         li.appendChild(a);
             a.appendChild(divPrM);
                 divPrM.appendChild(divPrP);
-                    divPrP.appendChild(img);
+                     divPrP.appendChild(img);
                     if(item.status!='Ожидается') {
                         divPrP.appendChild(divPrPr);
                         divPrPr.appendChild(span);
@@ -799,6 +823,15 @@ function getPointerFromHistoryCat(name) {
             while(li.nodeName!='LI')
                 li=li.parentNode;
             addToCartList(li);
+        }
+        else if(e.target.classList.contains('textDescription')){
+            if(e.target.style.overflow=="hidden"){
+                e.target.style.overflow="visible";
+            }
+            else{
+                e.target.style.overflow="hidden";
+            }
+
         }
 
     }

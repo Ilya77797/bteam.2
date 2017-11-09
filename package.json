@@ -1,10 +1,9 @@
 {
-  "name": "bteam",
+  "name": "n",
   "version": "1.0.0",
-  "description": "",
   "dependencies": {
     "crypto": "1.0.1",
-    "koa-compose":"^4.0.0",
+    "koa-compose": "^4.0.0",
     "bunyan": "1.8.12",
     "clarify": "^2.0.0",
     "co-busboy": "1.4.0",
@@ -40,8 +39,7 @@
     "should": "13.1.2",
     "trace": "^3.0.0",
     "yargs": "^8.0.2",
-    "async_hooks":"^1.0.0"
-
+    "async_hooks": "^1.0.0"
   },
   "main": "server.js",
   "directories": {
@@ -56,5 +54,14 @@
     "start": "node server.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ilya77797/bteam.2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ilya77797/bteam.2/issues"
+  },
+  "homepage": "https://github.com/Ilya77797/bteam.2#readme",
+  "description": ""
 }

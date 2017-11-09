@@ -79,6 +79,7 @@ exports.get=async function(ctx, next) {
                 item.specialPrice1='null';
                 item.specialPrice2='null';
                 item.specialPrice3='null';
+                item.specialPrice4='null';
             });
 
             ctx.body = {Products:products, login:false, PageCount:numberOfPages};
