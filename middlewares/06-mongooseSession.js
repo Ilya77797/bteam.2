@@ -1,5 +1,5 @@
 const session = require('koa-generic-session');
-const mongooseStore = require('koa-session-mongoose');
+const mongooseStore = require('../libs/mongoose-sess');
 const convert = require('koa-convert');
 const mongoose=require('../libs/mongoose');
 
