@@ -368,9 +368,14 @@ window.addEventListener('DOMContentLoaded', function() {
             if(value==null)
                 return;
 
-
+            if(value<this.minOrder){
+                var totalPrice=document.getElementById(`PriceTotal${this._id}`);
+                totalPrice.textContent='0';
+                calculateAll();
+                return;
+            }
             var totalPrice=document.getElementById(`PriceTotal${this._id}`);
-            totalPrice.textContent=`${value*price-value*price*discount/100}`;
+            totalPrice.textContent=`${Math.round((value*price-value*price*discount/100)*1000)/1000}`;
             calculateAll();
 
 
