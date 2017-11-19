@@ -352,7 +352,8 @@ window.addEventListener('DOMContentLoaded', function() {
             var select=document.getElementById(`select${this._id}`);
             var discount=0;
             try {
-                discount=parseFloat(this.discount);
+                if(!this.discount==undefined)
+                     discount=parseFloat(this.discount);
             }
             catch (e){
 

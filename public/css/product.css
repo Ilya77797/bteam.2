@@ -772,7 +772,7 @@ small.spPrice{
     }
     #chooseSort{
         display: inline-block;
-        width: 4%!important;
+        width: 7%!important;
         margin-left: 3%!important;
 
     }
@@ -927,7 +927,7 @@ small.spPrice{
 
 
     .table-layout{
-        max-height: 80vh;
+        max-height: 70vh;
         overflow-y: scroll;
         -webkit-overflow-scrolling: touch;
     }
