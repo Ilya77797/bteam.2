@@ -352,7 +352,7 @@ window.addEventListener('DOMContentLoaded', function() {
             var select=document.getElementById(`select${this._id}`);
             var discount=0;
             try {
-                if(!this.discount==undefined)
+                if(this.discount!==undefined)
                      discount=parseFloat(this.discount);
             }
             catch (e){
