@@ -13,6 +13,8 @@ html
         link(rel="shortcut icon" type="image/x-icon" href="/favicon.ico")
         script(src="js/jquery.min.js")
         script(src="js/korzina.js")
+        script(src="js/phoneFormat/jquery.maskedinput.js")
+        script(src="js/phoneFormat/jquery.maskedinput.min.js")
         script(src="https://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js")
 
 
@@ -29,17 +31,28 @@ html
 
                     if(isLoged)
                         div.loginForm
-                            form(action="/logout" method="POST" id="loginForm")
+                            form(action="/logout:korz" method="POST" id="loginForm")
                                 h2 Добро пожаловать!
                                 button(type="submit") Выйти
                     else
                         div.loginForm
-                            form(action="/login" method="POST" id="loginForm")
+                            form(action="/login:korz" method="POST" id="loginForm")
                                 h2 Вход
                                 input(name="username" placeholder="Имя пользователья")
                                 input(name="password" placeholder="Пароль")
                                 button(type="submit") Войти
             div(style='clear:both')
                 hr.line
-            h3 Товары в корзине:
-            ul#PR.products.clearfix
+            div.topMenu.clearfix(style="display:block")
+                div
+                a.backToProduct(href="/") Назад к товарам
+            ul#PR.table-layout.clearfix
+            form.formOrder(action="/order" method="POST" id="OrderForm")
+                input.textbox(name="name" placeholder="Укажите ваше ФИО" required)
+                input.textbox(name="emailaddress" placeholder="Укажите ваш Email" required)
+                input#phone.textbox(name="phone" placeholder="Укажите ваш телефон" required)
+                textarea.message(rows="4" cols="50" name="subject" placeholder="Коментарий к заказу:" required)
+                input.buttonSend(name="submit"  type="submit" value="Отправить")
+
+
+

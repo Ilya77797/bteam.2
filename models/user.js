@@ -10,7 +10,6 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'editor', 'admin']
   },
   username:         {
     type:     String,
@@ -18,6 +17,14 @@ const userSchema = new mongoose.Schema({
     required: "Поле не может быть пустым.",
 
   },
+  visiblePrice:{
+    type: Array,
+  } ,
+
+    discount:{
+      type:String,
+    },
+
   passwordHash: {
     type: String,
     required: true

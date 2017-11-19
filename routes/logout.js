@@ -4,5 +4,8 @@ exports.post = async function(ctx, next) {
 
   ctx.session = null; // destroy session (!!!)
 
-  ctx.redirect('/');
+  if(ctx.request.ctx.params.f==':main')
+    ctx.redirect('/');
+  else
+      ctx.redirect('/corzina');
 };

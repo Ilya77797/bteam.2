@@ -3,10 +3,6 @@
     "http://img.optonoff.ru/show/",
     "http://img.optonoff.ru/"
   ],
-  "users":[
-["person","ert7U","Клиент","1 2 3","0.0"],
-["shopper","4kuz9","Гость","1 2","1.0"],
-["super","cft9Q","Сотрудник","1 2 3 4","0.0"]],
   "groups": [
     {
       "name": "Батареи и элементы питания",

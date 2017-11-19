@@ -1,8 +1,11 @@
 const mongoose=require('../libs/mongoose');
 var Categor=require('../models/categor');
 exports.get=async function(ctx, next) {
-    var data=ctx.request.body.search.trim();
-    if(data[0]==''||data[0]==undefined){
+
+    ctx.body=await Categor.find({});
+
+   /* var data=ctx.request.body.search.trim();
+    if(data==undefined||data[0]==''){
         var cat= await Categor.find({});
     }
     else {
@@ -14,7 +17,7 @@ exports.get=async function(ctx, next) {
     }
     else {
         ctx.body=cat;
-    }
+    }*/
 
 
 

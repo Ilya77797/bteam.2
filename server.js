@@ -31,14 +31,15 @@ const Router = require('koa-router');
 const router = new Router();
 
 router.get('/', require('./routes/main').get);
-router.post('/login', require('./routes/login').post);
-router.post('/logout', require('./routes/logout').post);
+router.post('/login:f', require('./routes/login').post);
+router.post('/logout:f', require('./routes/logout').post);
 router.get('/registrate', require('./routes/registrate').get);
 router.post('/registrate', require('./routes/registrate').post);
 router.post('/searchCat', require('./routes/searchCat').get);
 router.post('/searchData', require('./routes/searchData').get);
 router.get('/corzina', require('./routes/korzina').get);
 router.post('/corzina', require('./routes/korzina').post);
+router.post('/order',require('./routes/order').post);
 
 
 

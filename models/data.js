@@ -62,6 +62,12 @@ const dataShema=new mongoose.Schema({
         },
     index:{//Очередность в JSON файле
         type: Number
+    },
+    indexSortUp:{
+        type: Number
+    },
+    indexSortAlp:{
+        type: Number
     }
 
 

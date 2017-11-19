@@ -9,7 +9,8 @@ exports.post = async (ctx, next) => {
     if (ctx.state.user) {
         var ses={
             sid:`koa:sess:${ctx.sessionId}`,
-            blob:'{"cookie":{"httpOnly":true,"path":"/","overwrite":true,"signed":false,"maxAge":14400000}}'
+            blob:`{"cookie":{"httpOnly":true,"path":"/","overwrite":true,"signed":false,"maxAge":14400000}`,
+            user:ctx.state.user._id.toString()
         };
         var curSes=new session.models.Session(ses);
         try {
@@ -18,7 +19,10 @@ exports.post = async (ctx, next) => {
         catch (e){
 
         }
-        ctx.redirect('/');
+        if(ctx.request.ctx.params.f==':main')
+            ctx.redirect('/');
+        else
+            ctx.redirect('/corzina');
     } else {
       ctx.status = 401;
       ctx.body = { error: 'err'};

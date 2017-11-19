@@ -130,6 +130,10 @@ html
                             a(href="http://www.bteam.ru/") Тульский Региональный Филиал
             div(style='clear:both')
                 hr.line
+
+                div.catS
+                    form(action="/searchCat" method="POST" id="catSearch")
+                        input.clearable(name="search"  placeholder="Поиск в категориях" class="catS" autocomplete="off")
 //render data
     each item in mass
                         li.product-wrapper

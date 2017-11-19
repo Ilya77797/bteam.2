@@ -12,6 +12,16 @@ exports.get=async function(ctx, next) {
     var isMainSearch=ctx.request.body.flag;
     var isPageSearch=ctx.request.body.isPageS;
     var page=ctx.request.body.page;
+    var sort=ctx.request.body.sort;//Как сортировать
+    var sortField="index";
+    switch(sort){
+        case "1":sortField="indexSortAlp";
+            break;
+        case "2": sortField="indexSortUp";
+            break;
+        case "3": sortField="-indexSortUp";
+            break;
+    }
     if(isMainSearch)
         page=1;
 
@@ -19,24 +29,25 @@ exports.get=async function(ctx, next) {
     if(search==''){
         if(cat==null||cat=="allProducts")
         {
-            var products= await Data.find().skip((page-1)*LIMIT).limit(LIMIT);
+            var products= await Data.find().sort(sortField).skip((page-1)*LIMIT).limit(LIMIT);
             if(!isPageSearch)
                 numberOfPages=await Data.count().then(returnLength);
 
         }
         else {
-            var allCats=await Category.find({});
+            //For DeepSearch
+           /* var allCats=await Category.find({});
             var resMass=deepSearch(allCats,cat);
             if(resMass.length<=1){
                 resMass=resMass[0].name;
             }
             else {
                 resMass.shift();
-            }
+            }*/
 
-            var products=await Data.find({'category':{ $in : resMass }}).skip((page-1)*LIMIT).limit(LIMIT);
+            var products=await Data.find({'category':cat}).sort(sortField).skip((page-1)*LIMIT).limit(LIMIT);
             if(!isPageSearch)
-                var numberOfPages=await Data.count({'category':{ $in : resMass }}).then(returnLength);
+                var numberOfPages=await Data.count({'category':cat}).then(returnLength);
 
         }
 
@@ -45,22 +56,24 @@ exports.get=async function(ctx, next) {
         var rex=new RegExp(search,'i');//
         if(cat==null||cat=="allProducts")
         {
-            var products= await Data.find({'name':rex}).skip((page-1)*LIMIT).limit(LIMIT);
+            var products= await Data.find({'name':rex}).sort(sortField).skip((page-1)*LIMIT).limit(LIMIT);
             if(!isPageSearch)
                 numberOfPages=await Data.count({'name':rex}).then(returnLength);
         }
         else {//стр
-            var allCats=await Category.find({});
+            //For deep search
+           /* var allCats=await Category.find({});
             var resMass=deepSearch(allCats,cat);
             if(resMass.length<=1){
                 resMass=resMass[0].name;
             }
             else {
                 resMass.shift();
-            }
-            var products=await Data.find({'category':{ $in : resMass }, 'name':rex}).skip((page-1)*LIMIT).limit(LIMIT);
+            }*/
+
+            var products=await Data.find({'category':cat, 'name':rex}).sort(sortField).skip((page-1)*LIMIT).limit(LIMIT);
             if(!isPageSearch)
-                numberOfPages=await Data.count({'category':{ $in : resMass }, 'name':rex}).then(returnLength);
+                numberOfPages=await Data.count({'category':cat, 'name':rex}).then(returnLength);
         }
 
     }

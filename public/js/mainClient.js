@@ -13,9 +13,10 @@ window.addEventListener('DOMContentLoaded', function() {
     var currentCat=null;
     addEvents();
     SearchData(false,true);
-    var catForm=document.getElementById('catSearch');
+    getCats();
+   /* var catForm=document.getElementById('catSearch');
     var e=new Event('submit');
-    catForm.dispatchEvent(e);
+    catForm.dispatchEvent(e);*/
 
     function clear(id) {
         var element = document.getElementById(id);
@@ -220,7 +221,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     }
 
-    function SearchCat(form) {
+/*    function SearchCat(form) {
         form.onsubmit = function(event) {
             event.preventDefault();
             var a = new FormData(this);
@@ -239,7 +240,20 @@ window.addEventListener('DOMContentLoaded', function() {
             }
 
         }
+    }*/
+
+function getCats() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/searchCat', true);
+    xhr.send('');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState != 4) return;
+
+        if (xhr.status == 200) {
+            renderCat(JSON.parse(xhr.response));
+        }
     }
+}
 
     function SearchData(f,isMain) {
         var ul=document.getElementById('PR');
@@ -262,13 +276,14 @@ window.addEventListener('DOMContentLoaded', function() {
             PageS=1;
         if(f==undefined)
             f=false;
-
+            var sort=document.getElementById('chooseSort').options[document.getElementById('chooseSort').selectedIndex].value;
             var req={
                 text:textS,
                 page:PageS,
                 cat:categor,
                 flag:isMain,
-                isPageS:f
+                isPageS:f,
+                sort:sort
             };
 
 
@@ -294,16 +309,20 @@ window.addEventListener('DOMContentLoaded', function() {
 
     function addEvents() {
         //for categories
-        var catForm=document.getElementById('catSearch');
+     /*   var catForm=document.getElementById('catSearch');
         SearchCat(catForm);
         catForm.search.addEventListener('keyup',function () {
             var event = new Event("submit");
             catForm.dispatchEvent(event);
+        });*/
+
+
+
+        //for Select
+        var select=document.getElementById('chooseSort');
+        select.addEventListener('change',(e)=>{
+            SearchData(false, true);
         });
-
-
-
-
         //for data
         var dataForm=document.getElementById('dataSearch');
         dataForm.searchD.addEventListener('keyup',function () {
@@ -324,13 +343,13 @@ window.addEventListener('DOMContentLoaded', function() {
             document.getElementById('dataSearch').searchD.placeholder='Поиск товаров';
         });
 
-        catForm.search.addEventListener('focus',()=>{
+ /*       catForm.search.addEventListener('focus',()=>{
             document.getElementById('catSearch').search.placeholder='';
         });
 
         catForm.search.addEventListener('blur',()=>{
             document.getElementById('catSearch').search.placeholder='Поиск в категориях';
-        });
+        });*/
 
 
         var pagination=document.getElementById('light-pagination');
@@ -663,11 +682,18 @@ function getPointerFromHistoryCat(name) {
         var divPrPr=document.createElement('div');//4
         divPrPr.classList.add('product-preview');
 
-        var span=document.createElement('span');//5
-        span.classList.add('button');
-        span.classList.add('to-cart');
-        span.setAttribute('data-info', item._id);
-        span.textContent="В корзину";
+
+            if(item.price!="0.00"){
+                var span=document.createElement('span');//5
+                span.classList.add('button');
+                span.classList.add('to-cart');
+                span.setAttribute('data-info', item._id);
+                span.textContent="В корзину";
+                divPrPr.appendChild(span);
+            }
+
+
+
 
         var divPrT=document.createElement('div');//3
         divPrT.classList.add('product-text');
@@ -730,6 +756,18 @@ function getPointerFromHistoryCat(name) {
            imgIcon.setAttribute('src','images/onSale.png');//Акция
            spanIcon.textContent='Акция';
        }
+       else {
+           if(item.amount!="0"){
+               spanIcon.textContent='В наличии';
+               imgIcon.setAttribute('src','images/inOrder.png');
+
+           }
+           else{
+               spanIcon.textContent='Нет в наличие';
+               imgIcon.setAttribute('src','images/no.jpg');
+           }
+
+       }
        /* switch(item.status){
             case 'Акция!': imgIcon.setAttribute('src','images/onSale.png');
                 break;
@@ -744,6 +782,7 @@ function getPointerFromHistoryCat(name) {
 
         var spanPrPrice=document.createElement('span');//4
         spanPrPrice.classList.add('product-price');
+        spanPrPrice.classList.add('fix');//Чтобы b, small=float:left только в корзине
 
         if(login){
             var small=document.createElement('small');//5
@@ -784,7 +823,7 @@ function getPointerFromHistoryCat(name) {
                      divPrP.appendChild(img);
                     if(item.status!='Ожидается') {
                         divPrP.appendChild(divPrPr);
-                        divPrPr.appendChild(span);
+
                     }
                 divPrM.appendChild(divPrT);
                     divPrT.appendChild(divPrN);
@@ -815,7 +854,7 @@ function getPointerFromHistoryCat(name) {
         }
         else if(e.target.classList.contains('button')&&e.target.classList.contains('to-cart')){//Добавление товара в корзину
             var cookies=getCookie('itemsID');
-            if(cookies==undefined)
+            if(cookies==undefined||cookies=="")
                 setCookie('itemsID',e.target.dataset.info);
             else
                 setCookie('itemsID',cookies+';'+e.target.dataset.info);
@@ -851,6 +890,7 @@ function getPointerFromHistoryCat(name) {
     }
 
     function topMenuFetch(e) {
+
         e.preventDefault();
         var reg=new RegExp('main');
         if(e.target.nodeName=='A'&&e.target.href.match(reg))
@@ -878,14 +918,15 @@ function getPointerFromHistoryCat(name) {
             }
 
         }
-        else{
+        else{//Переход в корзину в новой вкладке
             reg=new  RegExp('corzina');
             var target=e.target;
             if(e.target.nodeName=='IMG')
                 target=e.target.parentNode;
 
             if(target&&target.href.match(reg)){///Переход в корзину
-                window.open(target.href, '_blank');
+                //window.open(target.href, '_blank');
+               window.location=target.href;
             }
         }
 
