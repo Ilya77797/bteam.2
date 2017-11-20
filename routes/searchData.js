@@ -2,6 +2,7 @@ const mongoose=require('../libs/mongoose');
 var isLogged=require('../libs/isLogged');
 var Data=require('../models/data');
 var Category=require('../models/categor');
+var getUser=require('../libs/getUser');
 const LIMIT=9;
 function returnLength(mass) {
     return Math.ceil(mass/9);
@@ -53,12 +54,12 @@ exports.get=async function(ctx, next) {
 
     }
     else{
-        var rex=new RegExp(search,'i');//
+        var massSearch=prepareForSearch(search);
         if(cat==null||cat=="allProducts")
         {
-            var products= await Data.find({'name':rex}).sort(sortField).skip((page-1)*LIMIT).limit(LIMIT);
+            var products= await Data.find({'name':{ $all : massSearch }}).sort(sortField).skip((page-1)*LIMIT).limit(LIMIT);
             if(!isPageSearch)
-                numberOfPages=await Data.count({'name':rex}).then(returnLength);
+                numberOfPages=await Data.count({'name':{ $all : massSearch }}).then(returnLength);
         }
         else {//стр
             //For deep search
@@ -71,9 +72,14 @@ exports.get=async function(ctx, next) {
                 resMass.shift();
             }*/
 
-            var products=await Data.find({'category':cat, 'name':rex}).sort(sortField).skip((page-1)*LIMIT).limit(LIMIT);
+            var products=await Data.find({'category':cat, 'name':{ $all : massSearch }}).sort(sortField).skip((page-1)*LIMIT).limit(LIMIT);
             if(!isPageSearch)
-                numberOfPages=await Data.count({'category':cat, 'name':rex}).then(returnLength);
+                numberOfPages=await Data.count({'category':cat, 'name':{ $all : massSearch }}).then(returnLength);
+            if (products.length==0){
+                var products= await Data.find({'name':{ $all : massSearch }}).sort(sortField).skip((page-1)*LIMIT).limit(LIMIT);
+                if(!isPageSearch)
+                    numberOfPages=await Data.count({'name':{ $all : massSearch }}).then(returnLength);
+            }
         }
 
     }
@@ -84,7 +90,8 @@ exports.get=async function(ctx, next) {
     else {
 
         if(await isLogged(ctx)){
-            ctx.body = {Products:products, login:true, PageCount:numberOfPages};
+            var userN= await getUser(ctx);
+            ctx.body = {Products:products, login:true, PageCount:numberOfPages, User:userN};
 
         }
         else{
@@ -129,5 +136,13 @@ function deepSearch(cat, req) {
         });
     }
 
+}
+
+function prepareForSearch(str) {//Для поиска по всем комбинациям слов
+    var mass=str.split(' ');
+    mass=mass.map((item)=>{
+        return new RegExp(item.toString(),'i');
+    });
+    return mass;
 }
 

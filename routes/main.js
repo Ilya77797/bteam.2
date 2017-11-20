@@ -5,11 +5,13 @@ const mongoose=require('../libs/mongoose');
 var Categor=require('../models/categor');
 var Data=require('../models/data');
 var isLogged=require('../libs/isLogged');
+var getUser=require('../libs/getUser');
 const LIMIT=9;
 exports.get=async function(ctx, next) {
 
         if(await isLogged(ctx)){
-            ctx.body = ctx.render('main',{isLoged:true});
+            var user= await getUser(ctx);
+            ctx.body = ctx.render('main',{isLoged:true, name:user.name});
 
         }
         else {

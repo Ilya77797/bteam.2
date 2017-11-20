@@ -153,6 +153,8 @@ window.addEventListener('DOMContentLoaded', function() {
         var ul=document.getElementById('PR');
         var products=mass.Products;
         var login=mass.login;
+         if(login)
+             var User=mass.User;
         var pages=mass.PageCount;
         var promise=new Promise((resolve, reject)=>{
             resolve();
@@ -179,7 +181,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
                 products.forEach((item)=>{
-                    var li=createElements(item, login);
+                    var li=createElements(item, login, User);
                     try{
                         let mass=getCookie('itemsID').split(';');
                         if(mass.indexOf(item._id.toString())!=-1)
@@ -647,7 +649,7 @@ function getPointerFromHistoryCat(name) {
             }
         if(!parrent.classList.contains('subcatHistory')){
             parrent.classList.add('categor-item-active');
-            document.getElementById('dataSearch').searchD.value='';
+           // document.getElementById('dataSearch').searchD.value='';
             activeCatPointer=parrent;
 
         }
@@ -661,7 +663,7 @@ function getPointerFromHistoryCat(name) {
             SearchData(true,false);
     }
 
-    function createElements(item, login) {
+    function createElements(item, login, User) {
         var li=document.createElement('li') //0
         li.classList.add('product-wrapper');
 
@@ -785,12 +787,44 @@ function getPointerFromHistoryCat(name) {
         spanPrPrice.classList.add('fix');//Чтобы b, small=float:left только в корзине
 
         if(login){
-            var small=document.createElement('small');//5
+
+            var small = document.createElement('small');//5
+            if (item.status[2] != '1') {
+
+                var select = document.createElement('select');
+                select.setAttribute('id', `select${item._id}`);
+                spanPrPrice.classList.add('selectPrice');
+                if (User.price.length == 0) {
+                    var b = document.createElement('b');//5
+                    b.textContent = item.price;
+
+                    var small = document.createElement('small');//5
+                    small.textContent = 'руб';
+                    spanPrPrice.appendChild(b);
+                    spanPrPrice.appendChild(small);
+
+                }
+                else {
+                    var option = document.createElement('option');
+                    option.textContent = "Доступные цены";
+                    option.disabled = true;
+                    select.appendChild(option);
+                    User.price.forEach((price, i) => {
+                        var option = document.createElement('option');
+                        var priceName = `specialPrice${i + 1}`;
+                        option.textContent = item[priceName];
+                        select.appendChild(option);
+                    });
+                    spanPrPrice.appendChild(select);
+                }
+
+            }
+           /* var small=document.createElement('small');//5
             if(item.status[2]!='1')
                 small.textContent=`${item.price} руб /${item.specialPrice1} руб /${item.specialPrice2} руб /${item.specialPrice3} руб/${item.specialPrice4} руб`;
             else
                 small.innerHTML="<br> <br>";
-            spanPrPrice.appendChild(small);
+            spanPrPrice.appendChild(small);*/
         }
         else{
             var b=document.createElement('b');//5

@@ -162,6 +162,15 @@
 
 }
 
+.subcatA{
+    margin-left:5%;
+    margin-right: 2%;
+    min-height: 100%;
+    padding-right: 0px !important;
+
+}
+
+
 .subcatHistory a{/*class for subcatHistory*/
     text-decoration: underline !important;
     color: blue !important;
@@ -199,9 +208,12 @@
 .curSubcatA{
     display: none;
 }
-
+.categor-item img{
+    padding-left: 10%;
+}
 .categor-item img:hover{
-    transform: scale(1.5);
+    transform: scale(1.5)  translate(-5px) !important;
+
 }
 
 .categor-item-active{
@@ -777,16 +789,21 @@ small.spPrice{
 
     }
 
-
     .table-layout .product-text{
       width: 40% !important;
-  }
-.table-layout .zakazContainer{
+    }
+
+    .table-layout .zakazContainer{
     width: 100%;
-}
+    }
+
     .table-layout  .product-price{
         width: 70%;
     }
+
+  .loginForm{
+      bottom: 0px;
+  }
 
 
 }
@@ -936,6 +953,9 @@ small.spPrice{
     .formOrder{
         width: 100%;
     }
+    .loginForm{
+        bottom: 0px;
+    }
 
 
 
@@ -984,7 +1004,9 @@ small.spPrice{
         }
 
 
-
+        .loginForm{
+            bottom: 0px;
+        }
 
 
 
@@ -1027,6 +1049,10 @@ small.spPrice{
     }
     .table-layout .iconAvail{
         width: 5%;
+    }
+    .categor-item img:hover{
+        transform: scale(1.5);
+
     }
 }
 @media only screen and (max-width: 650px){
@@ -1121,11 +1147,18 @@ small.spPrice{
 
 
 
+
 }
 .wrapImg{
     align-self:center;
     width:3%;
     margin-right: 1%;
 }
+
+.PriceTotal{
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
 
 

@@ -5,9 +5,14 @@ window.addEventListener('DOMContentLoaded', function() {
 
     function getOrderedProducts() {
         let mass=getCookie('itemsID');
+        if(mass.length==0)
+        {
+            renderNoProducts();
+            return
+        }
         if(mass==undefined)
         {
-            renderOrderedProducts(false);
+            renderNoProducts();
             return
         }
         mass=mass.split(';');
@@ -32,7 +37,7 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function renderOrderedProducts(isAnyData) {
+    function renderNoProducts() {
         var ul=document.getElementById('PR');
         ul.classList.remove('awaitSearch');
         var li=document.createElement('li');
@@ -375,7 +380,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             var totalPrice=document.getElementById(`PriceTotal${this._id}`);
-            totalPrice.textContent=`${Math.round((value*price-value*price*discount/100)*1000)/1000}`;
+            totalPrice.textContent=` ${Math.round((value*price-value*price*discount/100)*1000)/1000} `;
             calculateAll();
 
 
@@ -481,6 +486,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     function addEvents() {
         document.getElementById('PR').addEventListener('click', deleteFromKorzina);
+        document.getElementById('PR').addEventListener('change', recalculate);
     }
     function deleteFromKorzina(e) {
         e.preventDefault();
@@ -494,6 +500,20 @@ window.addEventListener('DOMContentLoaded', function() {
                 e.target.parentNode.parentNode.remove();
 
             }
+            if(mass.length==0){
+                renderNoProducts();
+                document.getElementsByClassName('ZakazItogForAll')[0].remove();
+            }
+
+        }
+    }
+
+    function recalculate (e) {
+        if(e.target.id.includes('select')){
+            var input=document.getElementById(`inputZ${e.target.id.substring(e.target.id.indexOf('t')+1)}`);
+            var event = new Event('ch');
+            input.dispatchEvent(event);
+
         }
     }
 

@@ -6,11 +6,15 @@ var Categor=require('../models/categor');
 var Data=require('../models/data');
 var isLogged=require('../libs/isLogged');
 const User=require('../models/user');
+var getUser=require('../libs/getUser');
 addProto();
 exports.get=async function (ctx, next) {
     //var products=ctx.request.body.products;
     if(await isLogged(ctx))
-        ctx.body = ctx.render('korzina',{isLoged:true});
+    {
+        var userN= await getUser(ctx);
+        ctx.body = ctx.render('korzina',{isLoged:true, name:userN.name});
+    }
     else
         ctx.body = ctx.render('korzina',{isLoged:false});
 };
@@ -31,16 +35,7 @@ exports.post=async function (ctx, next) {
     var data=await Data.find({_id:{ $in : massID }});
 
     if(await isLogged(ctx)){
-        var ses=ctx.sessionId;
-        var sesObj= await session.models.Session.find({sid:`koa:sess:${ses}`});
-        var userId=sesObj[0].user;
-        var c=userId.toObjectId();
-        var user= await User.find({_id:userId.toObjectId()});
-        var UserN={
-            name:user[0].displayName,
-            price:user[0].visiblePrice,
-            discount:user[0]. discount
-        };
+        var UserN= await getUser(ctx);
         ctx.body = {Products:data, login:true, User:UserN};
 
     }

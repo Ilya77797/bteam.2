@@ -31,7 +31,7 @@ html
                     if(isLoged)
                         div.loginForm
                             form(action="/logout:main" method="POST" id="loginForm")
-                                h2 Добро пожаловать!
+                                h3 Добро пожаловать, #{name}
                                 button(type="submit") Выйти
                     else
                         div.loginForm
