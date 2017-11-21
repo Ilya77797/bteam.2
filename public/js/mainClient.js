@@ -318,13 +318,13 @@ function getCats() {
             catForm.dispatchEvent(event);
         });*/
 
-        var INPUT=document.getElementsByTagName('input');
+      /*  var INPUT=document.getElementsByTagName('input');
         var SELECT=document.getElementsByTagName('select');
         Array.from(INPUT).concat(Array.from(SELECT)).forEach((item)=>{
             item.addEventListener('focus',(e)=>{
                 e.preventDefault()
             });
-        });
+        });*/
 
         //for Select
         var select=document.getElementById('chooseSort');
