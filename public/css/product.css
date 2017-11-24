@@ -1161,7 +1161,12 @@ small.spPrice{
 }
 
 #chooseSort{
-    max-width: 10px;
+    max-width: 30px;
+}
+
+.inputErr{
+    border: 2px solid red;
+
 }
 
 

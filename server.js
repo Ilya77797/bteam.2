@@ -40,7 +40,7 @@ router.post('/searchData', require('./routes/searchData').get);
 router.get('/corzina', require('./routes/korzina').get);
 router.post('/corzina', require('./routes/korzina').post);
 router.post('/order',require('./routes/order').post);
-
+router.post('/checkout', require('./routes/checkout').post);
 
 
 app.use(async (ctx, next) => {

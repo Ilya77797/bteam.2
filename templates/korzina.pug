@@ -47,7 +47,7 @@ html
                 div
                 a.backToProduct(href="/") Назад к товарам
             ul#PR.table-layout.clearfix
-            form.formOrder(action="/order" method="POST" id="OrderForm")
+            form.formOrder(name='checkout', id="OrderForm")
                 input.textbox(name="name" placeholder="Укажите ваше ФИО" required)
                 input.textbox(name="emailaddress" placeholder="Укажите ваш Email" required)
                 input#phone.textbox(name="phone" placeholder="Укажите ваш телефон" required)

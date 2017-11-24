@@ -4,20 +4,19 @@ window.addEventListener('DOMContentLoaded', function() {
     $("#phone").mask("8(999) 999-9999");
 
     function getOrderedProducts() {
-        let mass=getCookie('itemsID');
-        if(mass.length==0)
+        var flag=false;
+        var massCookies=getCookie('orderId');
+        if(massCookies==undefined||massCookies.length==0)
         {
+
             renderNoProducts();
             return
+
         }
-        if(mass==undefined)
-        {
-            renderNoProducts();
-            return
-        }
-        mass=mass.split(';');
+        var res=getOrderProfuctsWithAmount(massCookies);
+
         let req={
-            data:mass
+            data:res[0]
         };
 
         var xhr = new XMLHttpRequest();
@@ -30,11 +29,28 @@ window.addEventListener('DOMContentLoaded', function() {
             if (xhr.status == 200) {
                 var ul=document.getElementById('PR');
                 ul.classList.add('awaitSearch');
-                renderData(JSON.parse(xhr.response));
+
+                renderData(JSON.parse(xhr.response), res[1]);
+
+
             }
 
 
         }
+    }
+
+    function getOrderProfuctsWithAmount(mass){
+
+        var obj={};
+        mass=mass.split(';').map((item)=>{
+           let m=item.split('-');
+           obj[m[0]]=m[1];
+           return m[0]
+        });
+
+        return [mass,obj]
+
+
     }
 
     function renderNoProducts() {
@@ -53,7 +69,7 @@ window.addEventListener('DOMContentLoaded', function() {
         return matches ? decodeURIComponent(matches[1]) : undefined;
     }
 
-    function renderData(mass) {
+    function renderData(mass, res) {
 
         var ul=document.getElementById('PR');
         ul.classList.remove('awaitSearch');
@@ -93,6 +109,8 @@ window.addEventListener('DOMContentLoaded', function() {
                 if(login){
                     var discount=document.createElement('span');
                     discount.textContent=`Ваша персональная скидка: ${User.discount} %`;
+                    discount.setAttribute('data-disc',User.discount);
+                    discount.setAttribute('id','DISCOUNT');
                     discount.style.display="block";
                     div.appendChild(discount);
                 }
@@ -105,6 +123,40 @@ window.addEventListener('DOMContentLoaded', function() {
                 document.getElementsByClassName('topMenu')[0].appendChild(div);
                 //ul.parentNode.insertBefore(div,ul);
 
+
+            }).then(()=>{
+            if(res==undefined)
+                return
+
+                    var inputs=Array.from(document.getElementsByTagName('input')).filter((item)=>{
+                        return item.id.includes('inputZ')
+                    });
+                    var flag=false;
+                    try {
+                        var discount=document.getElementById('DISCOUNT').dataset.disc;
+                        flag=true;
+                    }
+                    catch (e){
+
+                    }
+
+                    inputs.forEach((item)=>{
+                        let id=item.id.substring(item.id.indexOf('Z')+1);
+                        var price='0';
+                        if(!flag){
+                            price=document.getElementById(`BPRICE${id}`).textContent;
+                            discount=0;
+                        }
+                        else{
+                            let select=document.getElementById(`select${id}`);
+                            price=select.options[select.options.length-1].text;
+                        }
+
+                        item.value=res[id];
+                        document.getElementById(`PriceTotal${id}`).textContent=` ${Math.round((res[id]*price-res[id]*price*discount/100)*1000)/1000} `;
+                    });
+
+                    calculateAll();
 
             });
 
@@ -257,6 +309,7 @@ window.addEventListener('DOMContentLoaded', function() {
             spanPrPrice.classList.add('selectPrice');
             if(User.price.length==0){
                 var b=document.createElement('b');//5
+                b.setAttribute('id',`BPRICE${item._id}`);
                 b.textContent=item.price;
 
                 var small=document.createElement('small');//5
@@ -288,6 +341,7 @@ window.addEventListener('DOMContentLoaded', function() {
         }
         else{
             var b=document.createElement('b');//5
+            b.setAttribute('id',`BPRICE${item._id}`);
             b.textContent=item.price;
 
             var small=document.createElement('small');//5
@@ -473,37 +527,58 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function checkInput(input, item) {
-        var value=parseInt(input.value);
 
-        if(isNaN(value)){
-            input.value=item.minOrder;
-            alert('Введите целое число');
-            return null
-        }
-        return value;
-    }
 
     function addEvents() {
         document.getElementById('PR').addEventListener('click', deleteFromKorzina);
         document.getElementById('PR').addEventListener('change', recalculate);
+        document.getElementById('OrderForm').addEventListener('submit', checkout);
+    }
+    function checkout(e) {
+        var form=document.forms.checkout;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/searchCat', true);
+        var data={
+            name:form.name.value,
+            email:form.emailaddress.value,
+            phone:form.phone.value,
+            comment:form.subject.value
+        };
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState != 4) return;
+
+            if (xhr.status == 200) {
+                renderCat(JSON.parse(xhr.response));
+            }
+
+
+        }
     }
     function deleteFromKorzina(e) {
         e.preventDefault();
         if(e.target.classList.contains('aDelFromKorzina')){
-            let id=e.target.dataset.info;
+            e.target.parentNode.parentNode.remove();
+            setOrderCookie();
+
+            /*let id=e.target.dataset.info;
             var mass=getCookie('itemsID').split(';');
             var index = mass.indexOf(id);
             if (index >= 0) {
                 mass.splice( index, 1 );
                 setCookie('itemsID',mass.join(';'));
                 e.target.parentNode.parentNode.remove();
+                setOrderCookie();
 
             }
             if(mass.length==0){
                 renderNoProducts();
                 document.getElementsByClassName('ZakazItogForAll')[0].remove();
-            }
+                setOrderCookie();
+            }*/
+
+
+
 
         }
     }
@@ -569,10 +644,16 @@ window.addEventListener('DOMContentLoaded', function() {
         var ul=document.getElementById('PR');
         var content=document.getElementById('content');
         var a=document.getElementById('showOrderForm');
+        if(!isEverythingFilled())
+            return
+
         if(ul.style.display=='none')
             a.textContent='Оформить заказ';
-        else
+        else{
             a.textContent='Назад в корзину';
+            setOrderCookie();
+        }
+
         $(ul).slideToggle(300);
         $(form).slideToggle(300);
         document.body.style.overflowY='scroll';
@@ -581,3 +662,100 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
+function setOrderCookie() {
+    var inputs=Array.from(document.getElementsByTagName('input')).filter((item)=>{
+        return item.id.includes('inputZ')
+    });
+    var a=0;
+    var cookie='';
+    inputs.forEach((item)=>{
+       if(item.value=='')
+           var value='0'
+        else
+           var value=item.value
+        cookie=cookie+`;${item.id.substring(item.id.indexOf('Z')+1)}-${value}`;
+    });
+    cookie=cookie.substring(1);
+    setCookie('orderId', cookie);
+}
+
+
+function isEverythingFilled() {
+    var flag=true;
+    var pos=null;
+    var inputs=Array.from(document.getElementsByTagName('input')).filter((item)=>{
+        return item.id.includes('inputZ')
+    });
+    inputs.forEach((item, i)=>{
+        if(item.value==''||checkInput(item,{minOrder:1})==null||item.value=='0'){
+            flag=false;
+            item.classList.add('inputErr');
+            item.value='Заполните это поле!';
+            pos=i;
+        }
+        else if(item.value!='Заполните это поле!'){
+            try{
+                item.classList.remove('inputErr');
+            }
+            catch (e){
+
+            }
+        }
+
+    });
+
+    if(flag)
+        return true
+
+    $('html, body').animate({
+        scrollTop: pos*inputs[pos].parentNode.parentNode.offsetHeight
+    }, 500);
+
+    return false
+}
+
+function setCookie(name, value, options) {//Установка кук
+    options = options || {};
+
+    var expires = options.expires;
+
+    if (typeof expires == "number" && expires) {
+        var d = new Date();
+        d.setTime(d.getTime() + expires * 1000);
+        expires = options.expires = d;
+    }
+    if (expires && expires.toUTCString) {
+        options.expires = expires.toUTCString();
+    }
+
+    value = encodeURIComponent(value);
+
+    var updatedCookie = name + "=" + value;
+
+    for (var propName in options) {
+        updatedCookie += "; " + propName;
+        var propValue = options[propName];
+        if (propValue !== true) {
+            updatedCookie += "=" + propValue;
+        }
+    }
+
+    document.cookie = updatedCookie;
+}
+
+function checkInput(input, item) {
+    var value=parseInt(input.value);
+
+    if(isNaN(value)){
+        input.value=item.minOrder;
+        alert('Введите целое число');
+        return null
+    }
+    return value;
+}
+
+function calculateEachTptalPrice() {
+    
+}
+

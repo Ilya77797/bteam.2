@@ -31,7 +31,10 @@ module.exports = {
     })
   },
   root:     process.cwd(),
-  port: process.env.PORT || 8080
+  port: process.env.PORT || 8080,
+  emailFrom:'farrukx.val@yandex.ru',
+  emailPassword:'123456789qwer',
+  emailTo:'farrukx.val@yandex.ru'
 };
 
 

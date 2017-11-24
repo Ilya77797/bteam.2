@@ -39,7 +39,8 @@
     "should": "13.1.2",
     "trace": "^3.0.0",
     "yargs": "^8.0.2",
-    "async_hooks": "^1.0.0"
+    "async_hooks": "^1.0.0»,
+    "nodemailer":"4.4.0"
   },
   "main": "server.js",
   "directories": {
